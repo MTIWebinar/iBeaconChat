@@ -13,7 +13,6 @@
 		FA6CB7FA192B60D20003B153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB7F8192B60D20003B153 /* InfoPlist.strings */; };
 		FA6CB7FC192B60D20003B153 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB7FB192B60D20003B153 /* main.m */; };
 		FA6CB800192B60D20003B153 /* KIOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB7FF192B60D20003B153 /* KIOAppDelegate.m */; };
-		FA6CB803192B60D20003B153 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB801192B60D20003B153 /* Main.storyboard */; };
 		FA6CB806192B60D20003B153 /* KIOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB805192B60D20003B153 /* KIOViewController.m */; };
 		FA6CB808192B60D20003B153 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB807192B60D20003B153 /* Images.xcassets */; };
 		FA6CB80F192B60D20003B153 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6CB80E192B60D20003B153 /* XCTest.framework */; };
@@ -21,6 +20,8 @@
 		FA6CB811192B60D20003B153 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6CB7F3192B60D20003B153 /* UIKit.framework */; };
 		FA6CB819192B60D20003B153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB817192B60D20003B153 /* InfoPlist.strings */; };
 		FA6CB81B192B60D20003B153 /* iBeaconChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB81A192B60D20003B153 /* iBeaconChatTests.m */; };
+		FA6CB829192B649B0003B153 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB828192B649B0003B153 /* iPhone.storyboard */; };
+		FA6CB82C192B66B80003B153 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB82E192B66B80003B153 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +45,6 @@
 		FA6CB7FD192B60D20003B153 /* iBeaconChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iBeaconChat-Prefix.pch"; sourceTree = "<group>"; };
 		FA6CB7FE192B60D20003B153 /* KIOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KIOAppDelegate.h; sourceTree = "<group>"; };
 		FA6CB7FF192B60D20003B153 /* KIOAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KIOAppDelegate.m; sourceTree = "<group>"; };
-		FA6CB802192B60D20003B153 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA6CB804192B60D20003B153 /* KIOViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KIOViewController.h; sourceTree = "<group>"; };
 		FA6CB805192B60D20003B153 /* KIOViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KIOViewController.m; sourceTree = "<group>"; };
 		FA6CB807192B60D20003B153 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -53,6 +53,11 @@
 		FA6CB816192B60D20003B153 /* iBeaconChatTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iBeaconChatTests-Info.plist"; sourceTree = "<group>"; };
 		FA6CB818192B60D20003B153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA6CB81A192B60D20003B153 /* iBeaconChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iBeaconChatTests.m; sourceTree = "<group>"; };
+		FA6CB826192B640F0003B153 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA6CB827192B640F0003B153 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA6CB828192B649B0003B153 /* iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPhone.storyboard; sourceTree = "<group>"; };
+		FA6CB82F192B66BF0003B153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FA6CB830192B66DA0003B153 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +119,7 @@
 			children = (
 				FA6CB7FE192B60D20003B153 /* KIOAppDelegate.h */,
 				FA6CB7FF192B60D20003B153 /* KIOAppDelegate.m */,
-				FA6CB801192B60D20003B153 /* Main.storyboard */,
+				FA6CB828192B649B0003B153 /* iPhone.storyboard */,
 				FA6CB804192B60D20003B153 /* KIOViewController.h */,
 				FA6CB805192B60D20003B153 /* KIOViewController.m */,
 				FA6CB807192B60D20003B153 /* Images.xcassets */,
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6CB7F7192B60D20003B153 /* iBeaconChat-Info.plist */,
+				FA6CB82E192B66B80003B153 /* Localizable.strings */,
 				FA6CB7F8192B60D20003B153 /* InfoPlist.strings */,
 				FA6CB7FB192B60D20003B153 /* main.m */,
 				FA6CB7FD192B60D20003B153 /* iBeaconChat-Prefix.pch */,
@@ -212,6 +218,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = FA6CB7E3192B60D20003B153;
 			productRefGroup = FA6CB7ED192B60D20003B153 /* Products */;
@@ -230,8 +237,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA6CB808192B60D20003B153 /* Images.xcassets in Resources */,
+				FA6CB82C192B66B80003B153 /* Localizable.strings in Resources */,
 				FA6CB7FA192B60D20003B153 /* InfoPlist.strings in Resources */,
-				FA6CB803192B60D20003B153 /* Main.storyboard in Resources */,
+				FA6CB829192B649B0003B153 /* iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,24 +287,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				FA6CB7F9192B60D20003B153 /* en */,
+				FA6CB826192B640F0003B153 /* ru */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FA6CB801192B60D20003B153 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA6CB802192B60D20003B153 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		FA6CB817192B60D20003B153 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FA6CB818192B60D20003B153 /* en */,
+				FA6CB827192B640F0003B153 /* ru */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FA6CB82E192B66B80003B153 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA6CB82F192B66BF0003B153 /* en */,
+				FA6CB830192B66DA0003B153 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -457,6 +468,7 @@
 				FA6CB820192B60D20003B153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA6CB821192B60D20003B153 /* Build configuration list for PBXNativeTarget "iBeaconChatTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +477,7 @@
 				FA6CB823192B60D20003B153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
