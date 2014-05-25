@@ -41,6 +41,8 @@
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"testregion"];
     self.beaconRegion.notifyEntryStateOnDisplay = YES;
     
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager setDelegate:self];
     [self.locationManager startMonitoringForRegion:self.beaconRegion];
 }
 
@@ -132,7 +134,6 @@
     
     NSLog(@"foundBeacon %@", foundBeacon.proximityUUID.UUIDString);
     NSLog(@"foundBeacons %d", [beacons count]);
-    
 }
 
 #pragma mark -
@@ -142,7 +143,7 @@
     NSLog(@"didDetermineState: %li for region: %@", state, region.identifier);
     
     if([region isKindOfClass:[CLBeaconRegion class]] && [region.identifier isEqualToString:self.beaconRegion.identifier]) {
-        CLBeaconRegion * beaconRegion = (CLBeaconRegion*)region;
+        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
         if(state == CLRegionStateInside)
             [self.locationManager startRangingBeaconsInRegion:beaconRegion];
         else
