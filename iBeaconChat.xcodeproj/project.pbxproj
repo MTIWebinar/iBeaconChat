@@ -22,7 +22,8 @@
 		FA6CB82C192B66B80003B153 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6CB82E192B66B80003B153 /* Localizable.strings */; };
 		FA6CB848192DF78F0003B153 /* KIOBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB847192DF78F0003B153 /* KIOBeacon.m */; };
 		FA6CB851192E3AC80003B153 /* KIOBeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6CB850192E3AC80003B153 /* KIOBeaconManager.m */; };
-		FAE541E1192F621700FDF067 /* KIOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE541E0192F621700FDF067 /* KIOViewController.m */; };
+		FA76611B193339F900B7F644 /* KIOChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA76611A193339F900B7F644 /* KIOChatViewController.m */; };
+		FAE541E1192F621700FDF067 /* KIOBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE541E0192F621700FDF067 /* KIOBeaconViewController.m */; };
 		FAE541E3192F622900FDF067 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE541E2192F622900FDF067 /* iPhone.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -63,8 +64,10 @@
 		FA6CB847192DF78F0003B153 /* KIOBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeacon.m; sourceTree = "<group>"; };
 		FA6CB84F192E3AC80003B153 /* KIOBeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBeaconManager.h; sourceTree = "<group>"; };
 		FA6CB850192E3AC80003B153 /* KIOBeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeaconManager.m; sourceTree = "<group>"; };
-		FAE541DF192F621700FDF067 /* KIOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOViewController.h; sourceTree = "<group>"; };
-		FAE541E0192F621700FDF067 /* KIOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOViewController.m; sourceTree = "<group>"; };
+		FA766119193339F900B7F644 /* KIOChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOChatViewController.h; sourceTree = "<group>"; };
+		FA76611A193339F900B7F644 /* KIOChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOChatViewController.m; sourceTree = "<group>"; };
+		FAE541DF192F621700FDF067 /* KIOBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBeaconViewController.h; sourceTree = "<group>"; };
+		FAE541E0192F621700FDF067 /* KIOBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeaconViewController.m; sourceTree = "<group>"; };
 		FAE541E2192F622900FDF067 /* iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPhone.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,8 +133,10 @@
 				FA6CB7FE192B60D20003B153 /* KIOAppDelegate.h */,
 				FA6CB7FF192B60D20003B153 /* KIOAppDelegate.m */,
 				FAE541E2192F622900FDF067 /* iPhone.storyboard */,
-				FAE541DF192F621700FDF067 /* KIOViewController.h */,
-				FAE541E0192F621700FDF067 /* KIOViewController.m */,
+				FAE541DF192F621700FDF067 /* KIOBeaconViewController.h */,
+				FAE541E0192F621700FDF067 /* KIOBeaconViewController.m */,
+				FA766119193339F900B7F644 /* KIOChatViewController.h */,
+				FA76611A193339F900B7F644 /* KIOChatViewController.m */,
 				FA6CB849192DF7960003B153 /* Beacon API */,
 				FA6CB807192B60D20003B153 /* Images.xcassets */,
 				FA6CB7F6192B60D20003B153 /* Supporting Files */,
@@ -281,9 +286,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA6CB851192E3AC80003B153 /* KIOBeaconManager.m in Sources */,
-				FAE541E1192F621700FDF067 /* KIOViewController.m in Sources */,
+				FAE541E1192F621700FDF067 /* KIOBeaconViewController.m in Sources */,
 				FA6CB848192DF78F0003B153 /* KIOBeacon.m in Sources */,
 				FA6CB800192B60D20003B153 /* KIOAppDelegate.m in Sources */,
+				FA76611B193339F900B7F644 /* KIOChatViewController.m in Sources */,
 				FA6CB7FC192B60D20003B153 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,22 +9,23 @@
 @import CoreLocation;
 @import CoreBluetooth;
 
-#import "KIOViewController.h"
+#import "KIOBeaconViewController.h"
 //#import "KIOBeacon.h"
 
-@interface KIOViewController () <CBPeripheralManagerDelegate, CLLocationManagerDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *labelIamStatus;
-@property (weak, nonatomic) IBOutlet UILabel *labelNearStatus;
-@property (weak, nonatomic) IBOutlet UILabel *labelProximityStatus;
+@interface KIOBeaconViewController () <CBPeripheralManagerDelegate, CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLBeaconRegion *beaconRegion;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CBPeripheralManager *peripheralManager;
+@property (nonatomic, weak) IBOutlet UILabel *labelIamStatus;
+@property (nonatomic, weak) IBOutlet UILabel *labelNearStatus;
+@property (nonatomic, weak) IBOutlet UILabel *labelProximityStatus;
+
+@property (nonatomic, strong) CLBeaconRegion *beaconRegion;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CBPeripheralManager *peripheralManager;
 
 @end
 
-@implementation KIOViewController
+@implementation KIOBeaconViewController
 
 
 - (void)viewDidLoad
@@ -133,14 +134,14 @@
     self.view.backgroundColor = [self proximityColor:foundBeacon];
     
     NSLog(@"foundBeacon %@", foundBeacon.proximityUUID.UUIDString);
-    NSLog(@"foundBeacons %d", [beacons count]);
+    NSLog(@"foundBeacons %i", (int)[beacons count]);
 }
 
 #pragma mark -
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
 {
-    NSLog(@"didDetermineState: %li for region: %@", state, region.identifier);
+    NSLog(@"didDetermineState: %i for region: %@", (int)state, region.identifier);
     
     if([region isKindOfClass:[CLBeaconRegion class]] && [region.identifier isEqualToString:self.beaconRegion.identifier]) {
         CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;

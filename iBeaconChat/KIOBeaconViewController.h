@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KIOViewController : UIViewController
+@interface KIOBeaconViewController : UIViewController
 
 @end
