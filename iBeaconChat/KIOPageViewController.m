@@ -7,39 +7,30 @@
 //
 
 #import "KIOPageViewController.h"
+#import "KIOPageViewController.h"
 #import "KIOChatViewController.h"
 #import "KIOBeaconViewController.h"
+#import "KIOSettingsViewController.h"
+#import "KIOErrorViewController.h"
+#import "KIOService.h"
 
 
 @interface KIOPageViewController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
-@property (strong, nonatomic) NSArray *pageData;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @end
 
 
 @implementation KIOPageViewController
 
-- (NSArray *)pageData {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    return [[dateFormatter monthSymbols] copy];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.pageViewController =
-    [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                    navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                  options:nil];
-    self.pageViewController.delegate = self;
     
-    KIOBeaconViewController *startingViewController = [self viewControllerAtIndex:0 storyboard:self.storyboard];
-    NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers
-                                      direction:UIPageViewControllerNavigationDirectionForward
-                                       animated:NO completion:nil];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(notificationBlutoothState:)
+               name:kKIOServiceBluetoothStateNotification object:nil];
     
-    self.pageViewController.dataSource = self;
-    
+    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.pageStoryboardIdentifiers.firstObject];
+    self.pageViewController = [self setupPageViewControllerWithController:viewController];
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
     
@@ -48,29 +39,73 @@
         pageViewRect = CGRectInset(pageViewRect, 40.0, 40.0);
     }
     self.pageViewController.view.frame = pageViewRect;
-    
     [self.pageViewController didMoveToParentViewController:self];
+
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (KIOBeaconViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard {
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+- (UIPageViewController *)setupPageViewControllerWithController:(UIViewController *)viewController {
+    UIPageViewController *pageViewController =
+    [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                    navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                  options:nil];
+    pageViewController.delegate = self;
+    pageViewController.dataSource = self;
+    
+    [pageViewController setViewControllers:@[viewController]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO completion:nil];
+    
+    return pageViewController;
+}
+
+
+#pragma mark - Privat
+
+- (UIViewController *)viewControllerAtIndex:(NSUInteger)index {
+    if (([self.pageStoryboardIdentifiers count] == 0) || (index >= [self.pageStoryboardIdentifiers count])) {
         return nil;
     }
+    return [self.storyboard instantiateViewControllerWithIdentifier:self.pageStoryboardIdentifiers[index]];
+}
+
+- (NSUInteger)indexOfViewController:(UIViewController *)viewController {
+    return [self.pageStoryboardIdentifiers indexOfObject:NSStringFromClass([viewController class])];
+}
+
+
+#pragma mark - NSNotification
+
+- (void)notificationBlutoothState:(NSNotification *)notification {
+    if ([notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue]) {
+        self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOBeaconViewController class]),
+                                           NSStringFromClass([KIOChatViewController class]),
+                                           NSStringFromClass([KIOSettingsViewController class])];
+    } else {
+        self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOErrorViewController class])];
+    }
     
-    KIOBeaconViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([KIOBeaconViewController class])];
-    dataViewController.dataObject = self.pageData[index];
-    return dataViewController;
+    [self startWalkthrough];
 }
 
-- (NSUInteger)indexOfViewController:(KIOBeaconViewController *)viewController {
-    return [self.pageData indexOfObject:viewController.dataObject];
-}
 
+#pragma mark - Action
+
+- (void)startWalkthrough {
+    UIViewController *startingViewController = [self viewControllerAtIndex:0];
+    [self.pageViewController setViewControllers:@[startingViewController]
+                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                       animated:NO completion:nil];
+}
 
 #pragma mark - UIPageViewControllerDelegate
 
@@ -85,7 +120,7 @@
         return UIPageViewControllerSpineLocationMin;
     }
     
-    KIOBeaconViewController *currentViewController = self.pageViewController.viewControllers[0];
+    UIViewController *currentViewController = self.pageViewController.viewControllers.firstObject;
     NSArray *viewControllers = nil;
     
     NSUInteger indexOfCurrentViewController = [self indexOfViewController:currentViewController];
@@ -105,26 +140,26 @@
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    NSUInteger index = [self indexOfViewController:(id)viewController];
+    NSUInteger index = [self indexOfViewController:viewController];
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
     
     index--;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    return [self viewControllerAtIndex:index];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    NSUInteger index = [self indexOfViewController:(id)viewController];
+    NSUInteger index = [self indexOfViewController:viewController];
     if (index == NSNotFound) {
         return nil;
     }
     
     index++;
-    if (index == [self.pageData count]) {
+    if (index == [self.pageStoryboardIdentifiers count]) {
         return nil;
     }
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    return [self viewControllerAtIndex:index];
 }
 
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KIOChatViewController : UITableViewController
+@interface KIOChatViewController : UIViewController
 
 @end

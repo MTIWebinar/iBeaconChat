@@ -8,15 +8,14 @@
 
 #import "KIOChatViewController.h"
 
-@interface KIOChatViewController ()
-
-@end
-
 @implementation KIOChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    
+
+
 }
 
 - (void)didReceiveMemoryWarning {
