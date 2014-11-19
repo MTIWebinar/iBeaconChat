@@ -1,5 +1,5 @@
 //
-//  KIOChatViewController.h
+//  RootViewController.h
 //  iBeaconChat
 //
 //  Created by Kirill Osipov on 19.11.14.
@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KIOChatViewController : UITableViewController
+@interface KIOPageViewController : UIViewController
 
 @end
+
