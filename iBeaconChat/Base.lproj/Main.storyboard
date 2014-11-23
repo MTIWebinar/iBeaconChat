@@ -77,7 +77,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOB-on-XDv">
                                 <rect key="frame" x="20" y="50" width="560" height="530"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfK-yv-wIQ">
+                                        <rect key="frame" x="265" y="250" width="30" height="30"/>
+                                        <state key="normal" title="Test">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionTest:" destination="oDT-yY-BKd" eventType="touchUpInside" id="HV3-mf-mdb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="ZfK-yv-wIQ" secondAttribute="centerX" id="ZFP-xO-ULP"/>
+                                    <constraint firstAttribute="centerY" secondItem="ZfK-yv-wIQ" secondAttribute="centerY" id="azI-CO-xMY"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

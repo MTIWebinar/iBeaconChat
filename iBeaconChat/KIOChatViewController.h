@@ -10,4 +10,6 @@
 
 @interface KIOChatViewController : UIViewController
 
+- (IBAction)actionTest:(id)sender;
+
 @end

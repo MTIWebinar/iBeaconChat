@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-@interface KIOService : NSObject
+@interface KIOBluetoothService : NSObject
 
 + (instancetype)sharedInstance;
 

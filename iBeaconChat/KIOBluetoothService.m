@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Kirill Osipov. All rights reserved.
 //
 
-#import "KIOService.h"
+#import "KIOBluetoothService.h"
 @import CoreBluetooth;
 
-@interface KIOService ()  <CBCentralManagerDelegate>
+@interface KIOBluetoothService ()  <CBCentralManagerDelegate>
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @end
 
 
-@implementation KIOService
+@implementation KIOBluetoothService
 
 + (instancetype)sharedInstance {
     static id sharedInstance = nil;

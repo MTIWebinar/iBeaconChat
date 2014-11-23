@@ -12,7 +12,7 @@
 #import "KIOBeaconViewController.h"
 #import "KIOSettingsViewController.h"
 #import "KIOErrorViewController.h"
-#import "KIOService.h"
+#import "KIOBluetoothService.h"
 
 
 @interface KIOSplashViewController ()
@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [KIOService sharedInstance];
+    [KIOBluetoothService sharedInstance];
 
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(notificationBlutoothState:) name:kKIOServiceBluetoothStateNotification object:nil];

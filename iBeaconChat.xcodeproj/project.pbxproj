@@ -12,11 +12,12 @@
 		FA1A50C71A1CA958001D976F /* KIOSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50C61A1CA958001D976F /* KIOSplashViewController.m */; };
 		FA1A50CA1A1CAD00001D976F /* KIOChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50C91A1CAD00001D976F /* KIOChatViewController.m */; };
 		FA1A50CD1A1CAD0F001D976F /* KIOBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50CC1A1CAD0F001D976F /* KIOBeaconViewController.m */; };
-		FA1A51111A1D3C5F001D976F /* KIOService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A51101A1D3C5F001D976F /* KIOService.m */; };
+		FA1A51111A1D3C5F001D976F /* KIOBluetoothService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A51101A1D3C5F001D976F /* KIOBluetoothService.m */; };
 		FA1A51151A1D4610001D976F /* KIOErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A51141A1D4610001D976F /* KIOErrorViewController.m */; };
 		FA1A51181A1D46CF001D976F /* KIOSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A51171A1D46CF001D976F /* KIOSettingsViewController.m */; };
 		FA1A51211A1D58BA001D976F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA1A51231A1D58BA001D976F /* Localizable.strings */; };
 		FA1A51281A1D5EB3001D976F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */; };
+		FA1A512E1A1DE427001D976F /* KIOMessageService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A512D1A1DE427001D976F /* KIOMessageService.m */; };
 		FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB891A1C9FBF00A5ED73 /* main.m */; };
 		FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */; };
 		FAFBCB901A1C9FBF00A5ED73 /* KIOPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8F1A1C9FBF00A5ED73 /* KIOPageViewController.m */; };
@@ -45,8 +46,8 @@
 		FA1A50C91A1CAD00001D976F /* KIOChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOChatViewController.m; sourceTree = "<group>"; };
 		FA1A50CB1A1CAD0F001D976F /* KIOBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBeaconViewController.h; sourceTree = "<group>"; };
 		FA1A50CC1A1CAD0F001D976F /* KIOBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeaconViewController.m; sourceTree = "<group>"; };
-		FA1A510F1A1D3C5F001D976F /* KIOService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOService.h; sourceTree = "<group>"; };
-		FA1A51101A1D3C5F001D976F /* KIOService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOService.m; sourceTree = "<group>"; };
+		FA1A510F1A1D3C5F001D976F /* KIOBluetoothService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBluetoothService.h; sourceTree = "<group>"; };
+		FA1A51101A1D3C5F001D976F /* KIOBluetoothService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBluetoothService.m; sourceTree = "<group>"; };
 		FA1A51131A1D4610001D976F /* KIOErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOErrorViewController.h; sourceTree = "<group>"; };
 		FA1A51141A1D4610001D976F /* KIOErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOErrorViewController.m; sourceTree = "<group>"; };
 		FA1A51161A1D46CF001D976F /* KIOSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOSettingsViewController.h; sourceTree = "<group>"; };
@@ -55,6 +56,8 @@
 		FA1A51251A1D58D7001D976F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA1A51291A1D5EB3001D976F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA1A512B1A1D5EB5001D976F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA1A512C1A1DE427001D976F /* KIOMessageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOMessageService.h; sourceTree = "<group>"; };
+		FA1A512D1A1DE427001D976F /* KIOMessageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOMessageService.m; sourceTree = "<group>"; };
 		FAFBCB841A1C9FBF00A5ED73 /* iBeaconChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFBCB881A1C9FBF00A5ED73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAFBCB891A1C9FBF00A5ED73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,8 +94,10 @@
 		FA1A51121A1D3C69001D976F /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				FA1A510F1A1D3C5F001D976F /* KIOService.h */,
-				FA1A51101A1D3C5F001D976F /* KIOService.m */,
+				FA1A510F1A1D3C5F001D976F /* KIOBluetoothService.h */,
+				FA1A51101A1D3C5F001D976F /* KIOBluetoothService.m */,
+				FA1A512C1A1DE427001D976F /* KIOMessageService.h */,
+				FA1A512D1A1DE427001D976F /* KIOMessageService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -287,11 +292,12 @@
 			files = (
 				FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */,
 				FA1A51181A1D46CF001D976F /* KIOSettingsViewController.m in Sources */,
-				FA1A51111A1D3C5F001D976F /* KIOService.m in Sources */,
+				FA1A51111A1D3C5F001D976F /* KIOBluetoothService.m in Sources */,
 				FA1A50C71A1CA958001D976F /* KIOSplashViewController.m in Sources */,
 				FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */,
 				FAFBCB901A1C9FBF00A5ED73 /* KIOPageViewController.m in Sources */,
 				FA1A50CD1A1CAD0F001D976F /* KIOBeaconViewController.m in Sources */,
+				FA1A512E1A1DE427001D976F /* KIOMessageService.m in Sources */,
 				FA1A50CA1A1CAD00001D976F /* KIOChatViewController.m in Sources */,
 				FA1A51151A1D4610001D976F /* KIOErrorViewController.m in Sources */,
 			);
