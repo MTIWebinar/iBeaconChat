@@ -7,11 +7,12 @@
 //
 
 #import "KIOPageViewController.h"
-#import "KIOPageViewController.h"
+
 #import "KIOChatViewController.h"
 #import "KIOBeaconViewController.h"
 #import "KIOSettingsViewController.h"
 #import "KIOErrorViewController.h"
+
 #import "KIOBluetoothService.h"
 
 
@@ -88,8 +89,7 @@
 - (void)notificationBlutoothState:(NSNotification *)notification {
     if ([notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue]) {
         self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOBeaconViewController class]),
-                                           NSStringFromClass([KIOChatViewController class]),
-                                           NSStringFromClass([KIOSettingsViewController class])];
+                                           NSStringFromClass([KIOChatViewController class])];
     } else {
         self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOErrorViewController class])];
     }

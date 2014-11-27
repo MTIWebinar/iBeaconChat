@@ -21,31 +21,38 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 
 @implementation KIOMessageService
 
++ (instancetype)sharedInstance
+{
+    static id sharedInstance = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
 - (instancetype)init {
     if ([super init]) {
-        self.peerID = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
+
+        [self setupSession];
 
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(startServices) name:UIApplicationWillEnterForegroundNotification object:nil];
         [nc addObserver:self selector:@selector(stopServices) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        
-        [self startServices];
     }
     return self;
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.session.delegate = nil;
-    self.serviceAdvertiser.delegate = nil;
-    self.serviceBrowser.delegate = nil;
 }
 
 
 #pragma mark - KIOMessageService State
 
 - (void)startServices {
-    [self setupSession];
     [self.serviceAdvertiser startAdvertisingPeer];
     [self.serviceBrowser startBrowsingForPeers];
 }
@@ -57,6 +64,9 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 }
 
 - (void)setupSession {
+    NSString *uniqID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    self.peerID = [[MCPeerID alloc] initWithDisplayName:uniqID];
+    
     self.session = [[MCSession alloc] initWithPeer:self.peerID];
     self.session.delegate = self;
     
@@ -70,8 +80,8 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 
 #pragma mark - Action
 
-- (void)sendString:(NSString *)string {
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+- (void)sendMessage:(NSString *)message {
+    NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     [self.session sendData:data toPeers:self.session.connectedPeers withMode:MCSessionSendDataReliable error:nil];
 }
 
@@ -79,8 +89,6 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 #pragma mark - MCNearbyServiceBrowserDelegate
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    NSLog(@"foundPeer: %@", peerID.displayName);
-    
     [browser invitePeer:peerID toSession:self.session withContext:nil timeout:30.0f];
 }
 
@@ -109,30 +117,22 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 #pragma mark - MCSessionDelegate
 
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
-
-    // TODO: kKIOServiceMessagePeerStateChangeNotification
-    // NSDictionary *dict = @{@"peerID": peerID, @"state": @(state)]};
+    NSDictionary *dict = @{@"id": peerID.displayName, @"state": @(state), @"date": [NSDate date]};
     
-    switch (state) {
-        case MCSessionStateNotConnected:
-            NSLog(@"Not Connected: %@", peerID.displayName);
-            break;
-        case MCSessionStateConnecting:
-            NSLog(@"Connecting: %@", peerID.displayName);
-            break;
-        case MCSessionStateConnected:
-            NSLog(@"Connected: %@", peerID.displayName);
-            break;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc postNotificationName:kKIOServiceMessagePeerStateChangeNotification object:nil userInfo:dict];
+    });
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary *dict = @{@"id": peerID.displayName, @"message": message, @"date": [NSDate date]};
 
-    // TODO: kKIOServiceMessagePeerReceiveDataNotification
-    // NSDictionary *dict = @{@"peerID": peerID, @"message": message};
-
-    NSLog(@"didReceiveData: %@ from %@", message, peerID.displayName);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc postNotificationName:kKIOServiceMessagePeerReceiveDataNotification object:nil userInfo:dict];
+    });
 }
 
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream

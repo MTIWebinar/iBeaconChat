@@ -26,7 +26,6 @@
     [super viewDidLoad];
     
     [KIOBluetoothService sharedInstance];
-
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(notificationBlutoothState:) name:kKIOServiceBluetoothStateNotification object:nil];
 }
@@ -45,8 +44,10 @@
 
 - (void)notificationBlutoothState:(NSNotification *)notification {
     self.blutoothState = [notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue];
-    [NSThread sleepForTimeInterval:.6f];
-    [self performSegueWithIdentifier:@"GOSegue" sender:self];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSThread sleepForTimeInterval:.3f];
+        [self performSegueWithIdentifier:@"GOSegue" sender:self];
+    });
 }
 
 
@@ -54,11 +55,12 @@
  
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     KIOPageViewController *pageViewController = [segue destinationViewController];
+
+    BOOL blutoothState = TARGET_IPHONE_SIMULATOR ? !self.blutoothState : self.blutoothState;
     
-    if (self.blutoothState) {
+    if (blutoothState) {
         pageViewController.pageStoryboardIdentifiers = @[NSStringFromClass([KIOBeaconViewController class]),
-                                                         NSStringFromClass([KIOChatViewController class]),
-                                                         NSStringFromClass([KIOSettingsViewController class])];
+                                                         NSStringFromClass([KIOChatViewController class])];
     } else {
         pageViewController.pageStoryboardIdentifiers = @[NSStringFromClass([KIOErrorViewController class])];
     }

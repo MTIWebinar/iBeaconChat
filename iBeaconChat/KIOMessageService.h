@@ -10,7 +10,12 @@
 
 @interface KIOMessageService : NSObject
 
-- (void)sendString:(NSString *)string;
++ (instancetype)sharedInstance;
+
+- (void)sendMessage:(NSString *)message;
+
+- (void)startServices;
+- (void)stopServices;
 
 @end
 
