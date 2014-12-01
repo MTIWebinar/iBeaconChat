@@ -93,7 +93,7 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
-    NSLog(@"lostPeer: %@", peerID.displayName);
+//    NSLog(@"lostPeer: %@", peerID.displayName);
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
@@ -105,7 +105,7 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID
        withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
-    NSLog(@"didReceiveInvitationFromPeer: %@ and invit him", peerID.displayName);
+//    NSLog(@"didReceiveInvitationFromPeer: %@ and invit him", peerID.displayName);
     invitationHandler(YES, self.session);
 }
 
@@ -152,7 +152,7 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 
 - (void)session:(MCSession *)session didReceiveCertificate:(NSArray *)certificate
        fromPeer:(MCPeerID *)peerID certificateHandler:(void(^)(BOOL accept))certificateHandler {
-    NSLog(@"didReceiveCertificate: %@", peerID.displayName);
+//    NSLog(@"didReceiveCertificate: %@", peerID.displayName);
     certificateHandler(YES);
 }
 

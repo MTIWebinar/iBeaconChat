@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KIOChatViewController : UITableViewController
+@interface KIOChatViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
-
-- (IBAction)actionSend:(UIBarButtonItem *)sender;
 
 @end

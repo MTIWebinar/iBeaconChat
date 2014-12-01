@@ -45,7 +45,7 @@
 - (void)notificationBlutoothState:(NSNotification *)notification {
     self.blutoothState = [notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [NSThread sleepForTimeInterval:.3f];
+        [NSThread sleepForTimeInterval:.6f];
         [self performSegueWithIdentifier:@"GOSegue" sender:self];
     });
 }

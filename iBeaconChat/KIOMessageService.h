@@ -8,6 +8,12 @@
 
 @import MultipeerConnectivity;
 
+typedef NS_ENUM(NSInteger, KIOMessageServiceUserState) {
+    KIOMessageServiceUserStateNotConnected,     // not in the session
+    KIOMessageServiceUserStateConnecting,       // connecting to this peer
+    KIOMessageServiceUserStateConnected         // connected to the session
+};
+
 @interface KIOMessageService : NSObject
 
 + (instancetype)sharedInstance;
