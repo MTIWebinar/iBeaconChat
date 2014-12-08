@@ -7,6 +7,7 @@
 //
 
 #import "KIOMessageService.h"
+@import MultipeerConnectivity;
 
 static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 
@@ -129,6 +130,8 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
     NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary *dict = @{@"id": peerID.displayName, @"message": message, @"date": [NSDate date]};
 
+    // TODO: nikname from UserDefault
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc postNotificationName:kKIOServiceMessagePeerReceiveDataNotification object:nil userInfo:dict];

@@ -7,6 +7,7 @@
 //
 
 #import "KIOChatViewController.h"
+
 #import "KIOMessageService.h"
 
 
@@ -30,16 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupView];
-
     self.messages = [NSMutableArray array];
     [[KIOMessageService sharedInstance] startServices];
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(notificationKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(notificationKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(notificationMessage:) name:kKIOServiceMessagePeerReceiveDataNotification object:nil];
-    [nc addObserver:self selector:@selector(notificationState:) name:kKIOServiceMessagePeerStateChangeNotification object:nil];
+    [self setupView];
+    [self listenNotification];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -50,7 +46,6 @@
 //    if (self.messages.count == 0) {
 //        [self.textField becomeFirstResponder];
 //    }
-//    self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
 }
 
@@ -64,10 +59,28 @@
 }
 
 
-#pragma mark - View Helper
+#pragma mark - Setup View
+
+- (void)setupView {
+    CGFloat topInset = [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(topInset, 0, 0, 0);
+    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:tgr];
+    
+    for (UIBarButtonItem *item in self.toolBar.items) {
+        if ([item.customView isKindOfClass:[UITextField class]]) {
+            item.width = CGRectGetWidth(self.view.frame) - topInset;
+        }
+    }
+    self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.textField.enablesReturnKeyAutomatically = YES;
+    self.textField.placeholder = NSLocalizedString(@"enter_text", nil);
+}
 
 - (void)scrollToEndContent {
-    if (self.tableView.contentSize.height > self.tableView.frame.size.height) {
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height) {
         CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
         [self.tableView setContentOffset:offset animated:YES];
     }
@@ -87,17 +100,20 @@
     }
 }
 
-
-#pragma mark - Setup View
-
-- (void)setupView {
-    CGFloat topInset = [UIApplication sharedApplication].statusBarFrame.size.height;
-    self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
-    self.textField.enablesReturnKeyAutomatically = YES;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    // TODO: viewWillTransitionToSize
 }
 
 
 #pragma mark - NSNotification
+
+- (void)listenNotification {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(notificationKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(notificationKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(notificationMessage:) name:kKIOServiceMessagePeerReceiveDataNotification object:nil];
+    [nc addObserver:self selector:@selector(notificationState:) name:kKIOServiceMessagePeerStateChangeNotification object:nil];
+}
 
 - (void)notificationKeyboard:(NSNotification *)notification {
     
@@ -119,17 +135,18 @@
         }
         
         self.toolBar.frame = toolBarRect;
-        [self.toolBar layoutIfNeeded];
     };
 
+    void (^completion)(BOOL finished) = ^(BOOL finished){
+        
+        [self scrollToEndContent];
+    };
+    
     [UIView animateWithDuration:keyboardDuration
                           delay:0
                         options:keyboardCurve
                      animations:animations
-                     completion:nil];
-    
-    
-    [self scrollToEndContent];
+                     completion:completion];
 }
 
 - (void)notificationMessage:(NSNotification *)notification {
@@ -139,14 +156,14 @@
     messageObject.text = notification.userInfo[@"message"];
     messageObject.date = notification.userInfo[@"date"];
     [self.messages addObject:messageObject];
-    
     [self.tableView reloadData];
+    [self scrollToEndContent];
 }
 
 - (void)notificationState:(NSNotification *)notification {
     KIOMessageServiceUserState state = [notification.userInfo[@"state"] integerValue];
     
-    // TODO: how many items in chat
+    // TODO: how many users in chat
     
     switch (state) {
         case KIOMessageServiceUserStateNotConnected:
@@ -161,19 +178,27 @@
     }
 }
 
+
 #pragma mark - Action
 
 - (void)send:(NSString *)message {
     [[KIOMessageService sharedInstance] sendMessage:message];
     
     KIOMessage *messageObject = [[KIOMessage alloc] init];
+    messageObject.uniqID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     messageObject.text = self.textField.text;
     messageObject.date = [NSDate date];
-    messageObject.uniqID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     [self.messages addObject:messageObject];
-    
-    self.textField.text = nil;
     [self.tableView reloadData];
+    [self scrollToEndContent];
+
+    self.textField.text = nil;
+}
+
+- (void)hideKeyboard {
+    if ([self.textField isFirstResponder]) {
+        [self.textField resignFirstResponder];
+    }
 }
 
 
@@ -186,28 +211,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
 
     KIOMessage *message = self.messages[indexPath.row];
     NSString *myID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
     if ([message.uniqID isEqualToString:myID]) {
         cell.textLabel.text = @"";
+        cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.text = message.text;
     } else {
         cell.textLabel.text = message.text;
         cell.detailTextLabel.text = @"";
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     }
     
     return cell;
-}
-
-
-#pragma mark - UITableViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    if ([self.textField isFirstResponder]) {
-        [self.textField resignFirstResponder];
-    }
 }
 
 
@@ -218,4 +237,6 @@
     return NO;
 }
 
+
 @end
+

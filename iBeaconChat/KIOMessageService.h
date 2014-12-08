@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Kirill Osipov. All rights reserved.
 //
 
-@import MultipeerConnectivity;
+@import Foundation;
 
 typedef NS_ENUM(NSInteger, KIOMessageServiceUserState) {
     KIOMessageServiceUserStateNotConnected,     // not in the session

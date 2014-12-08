@@ -10,4 +10,6 @@
 
 @interface KIOBeaconViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *beaconView;
+
 @end

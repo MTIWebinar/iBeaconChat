@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KIOPageViewController : UIViewController
 
+@interface KIOPageViewController : UIViewController
 @property (strong, nonatomic) NSArray *pageStoryboardIdentifiers;
 
 @end

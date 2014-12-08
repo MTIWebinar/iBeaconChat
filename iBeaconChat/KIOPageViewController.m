@@ -14,6 +14,26 @@
 #import "KIOErrorViewController.h"
 
 #import "KIOBluetoothService.h"
+#import "KIOMessageService.h"
+#import "KIOBeaconService.h"
+
+
+@interface CAGradientLayer (Gradient)
++ (CAGradientLayer *)gradient;
+@end
+@implementation CAGradientLayer (Gradient)
++ (CAGradientLayer *)gradient {
+    
+    UIColor *colorOne = [[UIColor redColor] colorWithAlphaComponent:0.1f];
+    UIColor *colorTwo = [[UIColor redColor] colorWithAlphaComponent:0.6f];
+    
+    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+    headerLayer.colors = @[(id)colorOne.CGColor, (id)colorTwo.CGColor];
+    headerLayer.locations = @[@0.0f, @1.0f];
+    
+    return headerLayer;
+}
+@end
 
 
 @interface KIOPageViewController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
@@ -26,9 +46,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(notificationBlutoothState:)
-               name:kKIOServiceBluetoothStateNotification object:nil];
+    [self setupViewUI];
+    [self listenNotification];
     
     UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.pageStoryboardIdentifiers.firstObject];
     self.pageViewController = [self setupPageViewControllerWithController:viewController];
@@ -47,6 +66,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
+    // !!!: remove or not listenNotification for kKIOServiceBluetoothStateNotification
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -69,6 +90,12 @@
     return pageViewController;
 }
 
+- (void)setupViewUI {
+    CAGradientLayer *bgLayer = [CAGradientLayer gradient];
+    bgLayer.frame = self.view.bounds;
+    [self.view.layer addSublayer:bgLayer];
+}
+
 
 #pragma mark - Privat
 
@@ -86,26 +113,41 @@
 
 #pragma mark - NSNotification
 
-- (void)notificationBlutoothState:(NSNotification *)notification {
-    if ([notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue]) {
-        self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOBeaconViewController class]),
-                                           NSStringFromClass([KIOChatViewController class])];
-    } else {
-        self.pageStoryboardIdentifiers = @[NSStringFromClass([KIOErrorViewController class])];
-    }
+- (void)listenNotification {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(notificationBlutooth:) name:kKIOServiceBluetoothStateNotification object:nil];
+    [nc addObserver:self selector:@selector(notificationMessage:) name:kKIOServiceMessagePeerReceiveDataNotification object:nil];
+}
+
+- (void)notificationBlutooth:(NSNotification *)notification {
+    BOOL blutoothON = [notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue];
+
+    self.pageStoryboardIdentifiers =
+    blutoothON ?    @[NSStringFromClass([KIOBeaconViewController class]), NSStringFromClass([KIOChatViewController class])] :
+                    @[NSStringFromClass([KIOErrorViewController class])];
     
-    [self startWalkthrough];
+    KIOBeaconService *locator = [KIOBeaconService sharedInstance];
+    blutoothON == YES ? [locator startMonitoring] : [locator stopMonitoring];
+    
+    [self walkToPageStoryboardIdentifier:self.pageStoryboardIdentifiers.firstObject];
+}
+
+- (void)notificationMessage:(NSNotification *)notification {
+    // TODO: notificationMessage with Action walkToPageStoryboardIdentifier:
 }
 
 
 #pragma mark - Action
 
-- (void)startWalkthrough {
-    UIViewController *startingViewController = [self viewControllerAtIndex:0];
+- (void)walkToPageStoryboardIdentifier:(NSString *)pageStoryboardIdentifier {
+    NSUInteger index =  [self.pageStoryboardIdentifiers indexOfObject:pageStoryboardIdentifier] != NSNotFound ?
+                        [self.pageStoryboardIdentifiers indexOfObject:pageStoryboardIdentifier] : 0;
+    UIViewController *startingViewController = [self viewControllerAtIndex:index];
     [self.pageViewController setViewControllers:@[startingViewController]
                                       direction:UIPageViewControllerNavigationDirectionReverse
                                        animated:NO completion:nil];
 }
+
 
 #pragma mark - UIPageViewControllerDelegate
 
