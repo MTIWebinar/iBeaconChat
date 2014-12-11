@@ -19,6 +19,8 @@
 		FA1A51281A1D5EB3001D976F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */; };
 		FA1A512E1A1DE427001D976F /* KIOMessageService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A512D1A1DE427001D976F /* KIOMessageService.m */; };
 		FA79FFA81A31FD0D00994123 /* KIOBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA79FFA71A31FD0D00994123 /* KIOBeaconService.m */; };
+		FA8E31271A35E54E00D7F690 /* AppSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA8E31261A35E54E00D7F690 /* AppSettings.plist */; };
+		FA8E312A1A35E70600D7F690 /* KIORadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E31291A35E70600D7F690 /* KIORadarView.m */; };
 		FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB891A1C9FBF00A5ED73 /* main.m */; };
 		FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */; };
 		FAFBCB901A1C9FBF00A5ED73 /* KIOPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8F1A1C9FBF00A5ED73 /* KIOPageViewController.m */; };
@@ -61,6 +63,9 @@
 		FA1A512D1A1DE427001D976F /* KIOMessageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOMessageService.m; sourceTree = "<group>"; };
 		FA79FFA61A31FD0D00994123 /* KIOBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBeaconService.h; sourceTree = "<group>"; };
 		FA79FFA71A31FD0D00994123 /* KIOBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeaconService.m; sourceTree = "<group>"; };
+		FA8E31261A35E54E00D7F690 /* AppSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppSettings.plist; sourceTree = "<group>"; };
+		FA8E31281A35E70600D7F690 /* KIORadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIORadarView.h; sourceTree = "<group>"; };
+		FA8E31291A35E70600D7F690 /* KIORadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIORadarView.m; sourceTree = "<group>"; };
 		FAFBCB841A1C9FBF00A5ED73 /* iBeaconChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFBCB881A1C9FBF00A5ED73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAFBCB891A1C9FBF00A5ED73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,6 +112,15 @@
 			name = Service;
 			sourceTree = "<group>";
 		};
+		FA8E312B1A35E71600D7F690 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				FA8E31281A35E70600D7F690 /* KIORadarView.h */,
+				FA8E31291A35E70600D7F690 /* KIORadarView.m */,
+			);
+			name = UIView;
+			sourceTree = "<group>";
+		};
 		FAFBCB7B1A1C9FBF00A5ED73 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +142,7 @@
 		FAFBCB861A1C9FBF00A5ED73 /* iBeaconChat */ = {
 			isa = PBXGroup;
 			children = (
+				FA8E312B1A35E71600D7F690 /* UIView */,
 				FA1A51121A1D3C69001D976F /* Service */,
 				FA1A50C51A1CA958001D976F /* KIOSplashViewController.h */,
 				FA1A50C61A1CA958001D976F /* KIOSplashViewController.m */,
@@ -155,6 +170,7 @@
 			children = (
 				FAFBCB8B1A1C9FBF00A5ED73 /* AppDelegate.h */,
 				FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */,
+				FA8E31261A35E54E00D7F690 /* AppSettings.plist */,
 				FA1A51231A1D58BA001D976F /* Localizable.strings */,
 				FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */,
 				FAFBCB881A1C9FBF00A5ED73 /* Info.plist */,
@@ -276,6 +292,7 @@
 				FA1A51211A1D58BA001D976F /* Localizable.strings in Resources */,
 				FA1A50C41A1CA47B001D976F /* BeaconScreen.xcassets in Resources */,
 				FAFBCB9E1A1C9FBF00A5ED73 /* LaunchScreen.xib in Resources */,
+				FA8E31271A35E54E00D7F690 /* AppSettings.plist in Resources */,
 				FAFBCB9B1A1C9FBF00A5ED73 /* Images.xcassets in Resources */,
 				FA1A50C21A1CA46F001D976F /* ChatScreen.xcassets in Resources */,
 			);
@@ -298,6 +315,7 @@
 				FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */,
 				FA1A51181A1D46CF001D976F /* KIOSettingsViewController.m in Sources */,
 				FA1A51111A1D3C5F001D976F /* KIOBluetoothService.m in Sources */,
+				FA8E312A1A35E70600D7F690 /* KIORadarView.m in Sources */,
 				FA1A50C71A1CA958001D976F /* KIOSplashViewController.m in Sources */,
 				FA79FFA81A31FD0D00994123 /* KIOBeaconService.m in Sources */,
 				FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */,
