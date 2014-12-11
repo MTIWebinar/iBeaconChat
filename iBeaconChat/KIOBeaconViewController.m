@@ -13,6 +13,24 @@
 #import "KIOBeaconService.h"
 
 
+@interface CAGradientLayer (Gradient)
++ (CAGradientLayer *)gradient;
+@end
+@implementation CAGradientLayer (Gradient)
++ (CAGradientLayer *)gradient {
+    
+    UIColor *colorOne = [[UIColor redColor] colorWithAlphaComponent:0.1f];
+    UIColor *colorTwo = [[UIColor redColor] colorWithAlphaComponent:0.6f];
+    
+    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+    headerLayer.colors = @[(id)colorOne.CGColor, (id)colorTwo.CGColor];
+    headerLayer.locations = @[@0.0f, @1.0f];
+    
+    return headerLayer;
+}
+@end
+
+
 @interface UIView (Pulse)
 + (UIView *)pulsatingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color;
 @end
@@ -26,10 +44,8 @@
     
     CABasicAnimation *scaleAnimation;
     scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
-//    scaleAnimation.duration = .8f;
     scaleAnimation.fromValue = @0.0f;
     scaleAnimation.toValue = @1.0f;
-//    scaleAnimation.autoreverses = YES;
     
     CAKeyframeAnimation *opacityAnimation;
     opacityAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
@@ -38,7 +54,7 @@
     opacityAnimation.removedOnCompletion = NO;
     
     CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
-    groupAnimation.duration = .8f * 2;
+    groupAnimation.duration = .8f * 4;
     groupAnimation.repeatCount = HUGE_VAL;
     groupAnimation.removedOnCompletion = NO;
     groupAnimation.animations = @[opacityAnimation, scaleAnimation];
@@ -52,7 +68,7 @@
 
 @interface UIColor (Styling)
 + (UIColor *)randomColor;
-+ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon withAlphaComponent:(CGFloat)alpha;
++ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon;
 @end
 @implementation UIColor (Styling)
 + (UIColor *)randomColor {
@@ -61,17 +77,24 @@
     CGFloat b = (float)(arc4random() % 256) / 255.f;
     return [UIColor colorWithRed:r green:g blue:b alpha:1.f];
 }
-
-+ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon withAlphaComponent:(CGFloat)alpha {
++ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon {
     switch (beacon.proximity) {
-        case CLProximityUnknown:    return [[UIColor lightGrayColor] colorWithAlphaComponent:alpha]; break;
-        case CLProximityImmediate:  return [[UIColor redColor] colorWithAlphaComponent:alpha]; break;
-        case CLProximityNear:       return [[UIColor greenColor] colorWithAlphaComponent:alpha]; break;
-        case CLProximityFar:        return [[UIColor yellowColor] colorWithAlphaComponent:alpha]; break;
-        default:                    return [UIColor clearColor]; break;
+        case CLProximityUnknown:    return [UIColor lightGrayColor];    break;
+        case CLProximityImmediate:  return [UIColor redColor];          break;
+        case CLProximityNear:       return [UIColor greenColor];        break;
+        case CLProximityFar:        return [UIColor yellowColor];       break;
+        default:                    return [UIColor clearColor];        break;
     }
 }
 @end
+
+
+
+
+
+
+
+
 
 @interface KIOBeaconViewController ()
 @property (strong, nonatomic) UIView *pulseView;
@@ -87,6 +110,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [self startPulsingView:self.view];
     [self listenNotification];
 }
 
@@ -106,21 +131,47 @@
 
 #pragma mark - UI creater
 
-- (void)reloadBeaconView {
-    [self.beaconView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+- (void)reloadBeaconView:(UIView *)view {
+    [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     for (CLBeacon *beacon in self.beacons) {
-        CGFloat random = (float)arc4random_uniform(3) + 2;
-
-        UIColor *color = [UIColor proximityBeaconColor:beacon withAlphaComponent:1.f];
-        CGPoint point = CGPointMake(CGRectGetMaxX(self.beaconView.frame)/2, CGRectGetMaxY(self.beaconView.frame)/random);
+        
+        CGFloat randomdx = (float)arc4random_uniform(10) * (float)arc4random_uniform(2)?-1:1;
+        CGFloat randomX = CGRectGetWidth(view.frame)/2 + randomdx;
+        CGFloat randomY = [self proximityBeaconPointY:beacon inView:view];
+        
+        UIColor *color = [UIColor proximityBeaconColor:beacon];
+        CGPoint point = CGPointMake(randomX, randomY);
         UIView *pulseBeacon = [UIView pulsatingCircleWithRadius:50.f position:point color:color];
         
-        [self.beaconView addSubview:pulseBeacon];
+        [view addSubview:pulseBeacon];
     }
-    
-    [self.view setNeedsDisplay];
 }
+
+- (CGFloat)proximityBeaconPointY:(CLBeacon *)beacon inView:(UIView *)view {
+    CGFloat h = CGRectGetHeight(view.frame);
+    switch (beacon.proximity) {
+        case CLProximityUnknown:    return arc4random_uniform(h/2);             break;
+        case CLProximityImmediate:  return h - arc4random_uniform(10);          break;
+        case CLProximityNear:       return h/2 + h/3 + arc4random_uniform(h/3); break;
+        case CLProximityFar:        return h/2 + arc4random_uniform(h/3);       break;
+    }
+}
+
+- (void)startPulsingView:(UIView *)view {
+    CGFloat radius = CGRectGetHeight(view.frame);
+    CGPoint point = CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame));
+    self.pulseView = [UIView pulsatingCircleWithRadius:radius position:point color:[UIColor greenColor]];
+    [view addSubview:self.pulseView];
+    [view setNeedsDisplay];
+}
+
+- (void)setupViewUI {
+    CAGradientLayer *bgLayer = [CAGradientLayer gradient];
+    bgLayer.frame = self.radarView.frame;
+    [self.radarView.layer addSublayer:bgLayer];
+}
+
 
 #pragma mark - NSNotification
 
@@ -131,22 +182,28 @@
 }
 
 - (void)notificationMessage:(NSNotification *)notification {
-    
-    if (!self.pulseView) {
-        CGFloat radius = 50.f;
-        CGFloat random = (float)arc4random_uniform(5) + 2;
-        CGPoint point = CGPointMake(CGRectGetMaxX(self.view.frame) - radius/7, CGRectGetMaxY(self.view.frame)/random);
-        self.pulseView = [UIView pulsatingCircleWithRadius:radius position:point color:[UIColor redColor]];
-        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionMessage)];
-        [self.pulseView addGestureRecognizer:tgr];
-        [self.view addSubview:self.pulseView];
-        [self.view setNeedsDisplay];
-    }
+    NSLog(@"%@", notification.userInfo);
 }
 
 - (void)notificationBeacon:(NSNotification *)notification {
-    self.beacons = (NSArray *)notification.userInfo[@"beacons"];
-    [self reloadBeaconView];
+    NSArray *tempBeacons = (NSArray *)notification.userInfo[@"beacons"];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BOOL isNew = NO;
+        for (CLBeacon *beacon in tempBeacons) {
+            if (![self.beacons containsObject:beacon]) {
+                isNew = YES;
+            };
+        }
+    
+        if (isNew) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.beacons = tempBeacons;
+                [self reloadBeaconView:self.beaconView];
+                [self.view setNeedsDisplay];
+            });
+        }
+    });
 }
 
 #pragma mark - Action

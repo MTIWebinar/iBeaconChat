@@ -18,24 +18,6 @@
 #import "KIOBeaconService.h"
 
 
-@interface CAGradientLayer (Gradient)
-+ (CAGradientLayer *)gradient;
-@end
-@implementation CAGradientLayer (Gradient)
-+ (CAGradientLayer *)gradient {
-    
-    UIColor *colorOne = [[UIColor redColor] colorWithAlphaComponent:0.1f];
-    UIColor *colorTwo = [[UIColor redColor] colorWithAlphaComponent:0.6f];
-    
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
-    headerLayer.colors = @[(id)colorOne.CGColor, (id)colorTwo.CGColor];
-    headerLayer.locations = @[@0.0f, @1.0f];
-    
-    return headerLayer;
-}
-@end
-
-
 @interface KIOPageViewController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @end
@@ -46,7 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupViewUI];
     [self listenNotification];
     
     UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.pageStoryboardIdentifiers.firstObject];
@@ -88,12 +69,6 @@
                                        animated:NO completion:nil];
     
     return pageViewController;
-}
-
-- (void)setupViewUI {
-    CAGradientLayer *bgLayer = [CAGradientLayer gradient];
-    bgLayer.frame = self.view.bounds;
-    [self.view.layer addSublayer:bgLayer];
 }
 
 

@@ -149,6 +149,12 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
     }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     [self postNotificationName:kKIOServiceLocationErrorNotification userInfo:@{@"error": error}];
 }

@@ -49,6 +49,13 @@
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if ([self.textField isFirstResponder]) {
+        [self.textField resignFirstResponder];
+    }
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.messages = nil;
