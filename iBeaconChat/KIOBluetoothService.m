@@ -29,10 +29,13 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.bluetoothManager =
-        [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()
-                                           options:@{CBCentralManagerOptionShowPowerAlertKey: @(NO)}];
+        
+        NSDictionary *options = @{CBCentralManagerOptionShowPowerAlertKey: @(NO)};
+        self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self
+                                                                     queue:dispatch_get_main_queue()
+                                                                   options:options];
     }
+
     return self;
 }
 
@@ -40,12 +43,18 @@
 #pragma mark - CBCentralManagerDelegate
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-    BOOL bluetooth = central.state == CBPeripheralManagerStatePoweredOn ? YES : NO;
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:kKIOServiceBluetoothStateNotification object:nil
-                        userInfo:@{kKIOServiceBluetoothStateNotification : @(bluetooth)}];
+    BOOL bluetoothON = central.state == CBPeripheralManagerStatePoweredOn ? YES : NO;
+    [self postNotificationBluetoothState:bluetoothON];
 }
 
+
+#pragma mark - Notification
+
+- (void)postNotificationBluetoothState:(BOOL)bluetoothState {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:kKIOServiceBluetoothStateNotification object:nil
+                        userInfo:@{kKIOServiceBluetoothStateNotification : @(bluetoothState)}];
+}
 
 @end
 

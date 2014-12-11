@@ -7,6 +7,7 @@
 //
 
 #import "KIOBeaconService.h"
+@import CoreLocation;
 @import UIKit;
 
 
@@ -16,6 +17,18 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
 };
 
 
+#pragma mark - CLBeacon Category
+@interface CLBeacon (Helper)
+- (NSString *)unicID;
+@end
+@implementation CLBeacon (Helper)
+- (NSString *)unicID {
+    return [NSString stringWithFormat:@"%@-%@-%@", self.proximityUUID.UUIDString, self.major, self.minor];
+}
+@end
+
+
+#pragma mark - KIOBeacon Service
 @interface KIOBeaconService ()  <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLBeaconRegion *beaconRegion;
@@ -131,7 +144,11 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
     if (beacons.count > 0) {
         if ([region.proximityUUID isEqual:self.beaconRegion.proximityUUID]) {
-            [self postNotificationName:kKIOServiceBeaconsInRegionNotification userInfo:@{@"beacons": beacons}];
+            NSMutableDictionary *beaconDictionary = [NSMutableDictionary dictionaryWithCapacity:beacons.count];
+            for (CLBeacon *beacon in beacons) {
+                beaconDictionary[[beacon unicID]] = @(beacon.proximity);
+            }
+            [self postNotificationName:kKIOServiceBeaconsInRegionNotification userInfo:@{@"beacons": beaconDictionary}];
         }
     }
 }

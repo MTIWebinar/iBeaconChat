@@ -12,7 +12,9 @@
 #import "KIOBeaconViewController.h"
 #import "KIOSettingsViewController.h"
 #import "KIOErrorViewController.h"
+
 #import "KIOBluetoothService.h"
+#import "KIOBeaconService.h"
 
 
 @interface KIOSplashViewController ()
@@ -26,8 +28,8 @@
     [super viewDidLoad];
     
     [KIOBluetoothService sharedInstance];
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(notificationBlutoothState:) name:kKIOServiceBluetoothStateNotification object:nil];
+    [KIOBeaconService sharedInstance];
+    [self listenNotification];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -41,6 +43,11 @@
 
 
 #pragma mark - NSNotification
+
+- (void)listenNotification {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(notificationBlutoothState:) name:kKIOServiceBluetoothStateNotification object:nil];
+}
 
 - (void)notificationBlutoothState:(NSNotification *)notification {
     self.blutoothState = [notification.userInfo[kKIOServiceBluetoothStateNotification] boolValue];
@@ -61,6 +68,9 @@
     if (blutoothState) {
         pageViewController.pageStoryboardIdentifiers = @[NSStringFromClass([KIOBeaconViewController class]),
                                                          NSStringFromClass([KIOChatViewController class])];
+        KIOBeaconService *locator = [KIOBeaconService sharedInstance];
+        blutoothState ? [locator startMonitoring] : [locator stopMonitoring];
+
     } else {
         pageViewController.pageStoryboardIdentifiers = @[NSStringFromClass([KIOErrorViewController class])];
     }

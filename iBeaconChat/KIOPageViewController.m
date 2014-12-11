@@ -102,7 +102,7 @@
                     @[NSStringFromClass([KIOErrorViewController class])];
     
     KIOBeaconService *locator = [KIOBeaconService sharedInstance];
-    blutoothON == YES ? [locator startMonitoring] : [locator stopMonitoring];
+    blutoothON ? [locator startMonitoring] : [locator stopMonitoring];
     
     [self walkToPageStoryboardIdentifier:self.pageStoryboardIdentifiers.firstObject];
 }

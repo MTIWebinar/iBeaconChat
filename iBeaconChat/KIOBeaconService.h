@@ -7,7 +7,13 @@
 //
 
 @import Foundation;
-@import CoreLocation;
+
+typedef NS_ENUM(NSInteger, KIOBeaconProximity) {
+    KIOBeaconProximityUnknown       = 0,
+    KIOBeaconProximityImmediate,
+    KIOBeaconProximityNear,
+    KIOBeaconProximityFar
+};
 
 @interface KIOBeaconService : NSObject
 

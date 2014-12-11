@@ -13,24 +13,7 @@
 #import "KIOBeaconService.h"
 
 
-@interface CAGradientLayer (Gradient)
-+ (CAGradientLayer *)gradient;
-@end
-@implementation CAGradientLayer (Gradient)
-+ (CAGradientLayer *)gradient {
-    
-    UIColor *colorOne = [[UIColor redColor] colorWithAlphaComponent:0.1f];
-    UIColor *colorTwo = [[UIColor redColor] colorWithAlphaComponent:0.6f];
-    
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
-    headerLayer.colors = @[(id)colorOne.CGColor, (id)colorTwo.CGColor];
-    headerLayer.locations = @[@0.0f, @1.0f];
-    
-    return headerLayer;
-}
-@end
-
-
+#pragma mark -
 @interface UIView (Pulse)
 + (UIView *)pulsatingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color;
 @end
@@ -65,10 +48,10 @@
 }
 @end
 
-
+#pragma mark -
 @interface UIColor (Styling)
 + (UIColor *)randomColor;
-+ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon;
++ (UIColor *)proximityBeaconColor:(KIOBeaconProximity)proximity;
 @end
 @implementation UIColor (Styling)
 + (UIColor *)randomColor {
@@ -77,13 +60,13 @@
     CGFloat b = (float)(arc4random() % 256) / 255.f;
     return [UIColor colorWithRed:r green:g blue:b alpha:1.f];
 }
-+ (UIColor *)proximityBeaconColor:(CLBeacon *)beacon {
-    switch (beacon.proximity) {
-        case CLProximityUnknown:    return [UIColor lightGrayColor];    break;
-        case CLProximityImmediate:  return [UIColor redColor];          break;
-        case CLProximityNear:       return [UIColor greenColor];        break;
-        case CLProximityFar:        return [UIColor yellowColor];       break;
-        default:                    return [UIColor clearColor];        break;
++ (UIColor *)proximityBeaconColor:(KIOBeaconProximity)proximity {
+    switch (proximity) {
+        case KIOBeaconProximityUnknown:     return [UIColor lightGrayColor];    break;
+        case KIOBeaconProximityImmediate:   return [UIColor redColor];          break;
+        case KIOBeaconProximityNear:        return [UIColor greenColor];        break;
+        case KIOBeaconProximityFar:         return [UIColor yellowColor];       break;
+        default:                            return [UIColor clearColor];        break;
     }
 }
 @end
@@ -94,11 +77,11 @@
 
 
 
-
+#pragma mark - KIOBeaconViewController
 
 @interface KIOBeaconViewController ()
 @property (strong, nonatomic) UIView *pulseView;
-@property (strong, nonatomic) NSArray *beacons;
+@property (strong, nonatomic) NSDictionary *beacons;
 @end
 
 
@@ -111,13 +94,17 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self startPulsingView:self.view];
     [self listenNotification];
+    if (!self.pulseView) {
+        [self startPulsingView:self.view];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self reloadBeaconView:self.beaconView];
     if (self.pulseView) {
         [self.pulseView removeFromSuperview];
         self.pulseView = nil;
@@ -134,13 +121,15 @@
 - (void)reloadBeaconView:(UIView *)view {
     [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    for (CLBeacon *beacon in self.beacons) {
+    for (NSString *beaconID in self.beacons) {
         
-        CGFloat randomdx = (float)arc4random_uniform(10) * (float)arc4random_uniform(2)?-1:1;
+        KIOBeaconProximity proximity = [self.beacons[beaconID] integerValue];
+        
+        CGFloat randomdx = (float)arc4random_uniform((int)(CGRectGetWidth(view.frame)/10)) * ((float)arc4random_uniform(2)?-1:1);
         CGFloat randomX = CGRectGetWidth(view.frame)/2 + randomdx;
-        CGFloat randomY = [self proximityBeaconPointY:beacon inView:view];
+        CGFloat randomY = [self proximityBeaconPointY:proximity inView:view];
         
-        UIColor *color = [UIColor proximityBeaconColor:beacon];
+        UIColor *color = [UIColor proximityBeaconColor:proximity];
         CGPoint point = CGPointMake(randomX, randomY);
         UIView *pulseBeacon = [UIView pulsatingCircleWithRadius:50.f position:point color:color];
         
@@ -148,13 +137,13 @@
     }
 }
 
-- (CGFloat)proximityBeaconPointY:(CLBeacon *)beacon inView:(UIView *)view {
+- (CGFloat)proximityBeaconPointY:(KIOBeaconProximity)proximity inView:(UIView *)view {
     CGFloat h = CGRectGetHeight(view.frame);
-    switch (beacon.proximity) {
-        case CLProximityUnknown:    return arc4random_uniform(h/2);             break;
-        case CLProximityImmediate:  return h - arc4random_uniform(10);          break;
-        case CLProximityNear:       return h/2 + h/3 + arc4random_uniform(h/3); break;
-        case CLProximityFar:        return h/2 + arc4random_uniform(h/3);       break;
+    switch (proximity) {
+        case KIOBeaconProximityUnknown:    return arc4random_uniform(h/2);             break;
+        case KIOBeaconProximityImmediate:  return h - arc4random_uniform(20);          break;
+        case KIOBeaconProximityNear:       return h/2 + h/3 + arc4random_uniform(h/3); break;
+        case KIOBeaconProximityFar:        return h/2 + arc4random_uniform(h/3);       break;
     }
 }
 
@@ -166,50 +155,34 @@
     [view setNeedsDisplay];
 }
 
-- (void)setupViewUI {
-    CAGradientLayer *bgLayer = [CAGradientLayer gradient];
-    bgLayer.frame = self.radarView.frame;
-    [self.radarView.layer addSublayer:bgLayer];
-}
-
 
 #pragma mark - NSNotification
 
 - (void)listenNotification {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(notificationMessage:) name:kKIOServiceMessagePeerReceiveDataNotification object:nil];
     [nc addObserver:self selector:@selector(notificationBeacon:) name:kKIOServiceBeaconsInRegionNotification object:nil];
 }
 
-- (void)notificationMessage:(NSNotification *)notification {
-    NSLog(@"%@", notification.userInfo);
-}
-
 - (void)notificationBeacon:(NSNotification *)notification {
-    NSArray *tempBeacons = (NSArray *)notification.userInfo[@"beacons"];
+    NSDictionary *tempBeacons = (NSDictionary *)notification.userInfo[@"beacons"];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        BOOL isNew = NO;
-        for (CLBeacon *beacon in tempBeacons) {
-            if (![self.beacons containsObject:beacon]) {
-                isNew = YES;
-            };
-        }
-    
-        if (isNew) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+    if (!self.beacons && tempBeacons.count > 0) {
+        self.beacons = tempBeacons;
+        [self reloadBeaconView:self.beaconView];
+        [self.view setNeedsDisplay];
+    } else {
+        
+        // TODO: isNew beacon refuck
+        for (NSString *beaconID in tempBeacons.allKeys) {
+            if (![self.beacons.allKeys containsObject:beaconID] ||
+                ![tempBeacons[beaconID] isEqualToNumber:self.beacons[beaconID]]) {
+                
                 self.beacons = tempBeacons;
                 [self reloadBeaconView:self.beaconView];
                 [self.view setNeedsDisplay];
-            });
+            }
         }
-    });
-}
-
-#pragma mark - Action
-
-- (void)actionMessage {
-    NSLog(@"PIP");
+    }
 }
 
 
