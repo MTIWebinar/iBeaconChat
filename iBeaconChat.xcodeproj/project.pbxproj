@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA1A50C21A1CA46F001D976F /* ChatScreen.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1A50C11A1CA46F001D976F /* ChatScreen.xcassets */; };
-		FA1A50C41A1CA47B001D976F /* BeaconScreen.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1A50C31A1CA47B001D976F /* BeaconScreen.xcassets */; };
 		FA1A50C71A1CA958001D976F /* KIOSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50C61A1CA958001D976F /* KIOSplashViewController.m */; };
 		FA1A50CA1A1CAD00001D976F /* KIOChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50C91A1CAD00001D976F /* KIOChatViewController.m */; };
 		FA1A50CD1A1CAD0F001D976F /* KIOBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A50CC1A1CAD0F001D976F /* KIOBeaconViewController.m */; };
@@ -19,7 +17,6 @@
 		FA1A51281A1D5EB3001D976F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */; };
 		FA1A512E1A1DE427001D976F /* KIOMessageService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1A512D1A1DE427001D976F /* KIOMessageService.m */; };
 		FA79FFA81A31FD0D00994123 /* KIOBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA79FFA71A31FD0D00994123 /* KIOBeaconService.m */; };
-		FA8E31271A35E54E00D7F690 /* AppSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA8E31261A35E54E00D7F690 /* AppSettings.plist */; };
 		FA8E312A1A35E70600D7F690 /* KIORadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E31291A35E70600D7F690 /* KIORadarView.m */; };
 		FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB891A1C9FBF00A5ED73 /* main.m */; };
 		FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */; };
@@ -41,8 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FA1A50C11A1CA46F001D976F /* ChatScreen.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ChatScreen.xcassets; sourceTree = "<group>"; };
-		FA1A50C31A1CA47B001D976F /* BeaconScreen.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BeaconScreen.xcassets; sourceTree = "<group>"; };
 		FA1A50C51A1CA958001D976F /* KIOSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOSplashViewController.h; sourceTree = "<group>"; };
 		FA1A50C61A1CA958001D976F /* KIOSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOSplashViewController.m; sourceTree = "<group>"; };
 		FA1A50C81A1CAD00001D976F /* KIOChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOChatViewController.h; sourceTree = "<group>"; };
@@ -63,7 +58,6 @@
 		FA1A512D1A1DE427001D976F /* KIOMessageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOMessageService.m; sourceTree = "<group>"; };
 		FA79FFA61A31FD0D00994123 /* KIOBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOBeaconService.h; sourceTree = "<group>"; };
 		FA79FFA71A31FD0D00994123 /* KIOBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOBeaconService.m; sourceTree = "<group>"; };
-		FA8E31261A35E54E00D7F690 /* AppSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppSettings.plist; sourceTree = "<group>"; };
 		FA8E31281A35E70600D7F690 /* KIORadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIORadarView.h; sourceTree = "<group>"; };
 		FA8E31291A35E70600D7F690 /* KIORadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIORadarView.m; sourceTree = "<group>"; };
 		FAFBCB841A1C9FBF00A5ED73 /* iBeaconChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,8 +152,6 @@
 				FA1A51141A1D4610001D976F /* KIOErrorViewController.m */,
 				FAFBCBB31A1C9FEA00A5ED73 /* Board */,
 				FAFBCB9A1A1C9FBF00A5ED73 /* Images.xcassets */,
-				FA1A50C11A1CA46F001D976F /* ChatScreen.xcassets */,
-				FA1A50C31A1CA47B001D976F /* BeaconScreen.xcassets */,
 				FAFBCB871A1C9FBF00A5ED73 /* Supporting Files */,
 			);
 			path = iBeaconChat;
@@ -170,7 +162,6 @@
 			children = (
 				FAFBCB8B1A1C9FBF00A5ED73 /* AppDelegate.h */,
 				FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */,
-				FA8E31261A35E54E00D7F690 /* AppSettings.plist */,
 				FA1A51231A1D58BA001D976F /* Localizable.strings */,
 				FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */,
 				FAFBCB881A1C9FBF00A5ED73 /* Info.plist */,
@@ -290,11 +281,8 @@
 				FAFBCB991A1C9FBF00A5ED73 /* Main.storyboard in Resources */,
 				FA1A51281A1D5EB3001D976F /* InfoPlist.strings in Resources */,
 				FA1A51211A1D58BA001D976F /* Localizable.strings in Resources */,
-				FA1A50C41A1CA47B001D976F /* BeaconScreen.xcassets in Resources */,
 				FAFBCB9E1A1C9FBF00A5ED73 /* LaunchScreen.xib in Resources */,
-				FA8E31271A35E54E00D7F690 /* AppSettings.plist in Resources */,
 				FAFBCB9B1A1C9FBF00A5ED73 /* Images.xcassets in Resources */,
-				FA1A50C21A1CA46F001D976F /* ChatScreen.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
