@@ -90,7 +90,9 @@ static NSString *const kBonjourServiceType = @"chatservice"; // 15 max
 #pragma mark - MCNearbyServiceBrowserDelegate
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    [browser invitePeer:peerID toSession:self.session withContext:nil timeout:30.0f];
+    if ((uint32_t)self.peerID.hash > (uint32_t)peerID.hash) {
+        [browser invitePeer:peerID toSession:self.session withContext:nil timeout:15.0f];
+    }
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
