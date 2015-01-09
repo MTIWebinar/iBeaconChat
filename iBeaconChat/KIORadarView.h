@@ -12,12 +12,11 @@ IB_DESIGNABLE
 
 @interface KIORadarView : UIView
 
-@property (nonatomic) IBInspectable NSInteger circleCount;
-@property (nonatomic) IBInspectable NSInteger circleWidth;
-@property (nonatomic) IBInspectable UIColor *circleColor;
+@property (nonatomic) IBInspectable UIColor *color;
 
-@property (nonatomic) IBInspectable NSInteger fieldLineCount;
-@property (nonatomic) IBInspectable NSInteger fieldLineWidth;
-@property (nonatomic) IBInspectable UIColor *fieldLineColor;
+@property (nonatomic) IBInspectable NSUInteger segmentCount;
+@property (nonatomic) IBInspectable NSUInteger segmentWidth;
+
+@property (nonatomic) IBInspectable NSUInteger shadowRadius;
 
 @end
