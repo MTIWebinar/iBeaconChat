@@ -12,41 +12,8 @@
 #import "KIOMessageService.h"
 #import "KIOBeaconService.h"
 
+#import "UIView+Scanner.h"
 
-#pragma mark -
-@interface UIView (Pulse)
-+ (UIView *)pulsatingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color;
-@end
-@implementation UIView (Pulse)
-+ (UIView *)pulsatingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color {
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, radius*2, radius*2)];
-    view.center = point;
-    view.backgroundColor = color;
-    view.layer.cornerRadius = radius;
-    
-    CABasicAnimation *scaleAnimation;
-    scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
-    scaleAnimation.fromValue = @0.0f;
-    scaleAnimation.toValue = @1.0f;
-    
-    CAKeyframeAnimation *opacityAnimation;
-    opacityAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-    opacityAnimation.values = @[@0.2f, @0.4f, @0.0f];
-    opacityAnimation.keyTimes = @[@0.0f, @0.3f, @1.0f];
-    opacityAnimation.removedOnCompletion = NO;
-    
-    CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
-    groupAnimation.duration = .8f * 4;
-    groupAnimation.repeatCount = HUGE_VAL;
-    groupAnimation.removedOnCompletion = NO;
-    groupAnimation.animations = @[opacityAnimation, scaleAnimation];
-    
-    [view.layer addAnimation:groupAnimation forKey:@"groupAnimation"];
-
-    return view;
-}
-@end
 
 #pragma mark -
 @interface UIColor (Styling)
@@ -70,11 +37,6 @@
     }
 }
 @end
-
-
-
-
-
 
 
 #pragma mark - KIOBeaconViewController
@@ -131,7 +93,7 @@
         
         UIColor *color = [UIColor proximityBeaconColor:proximity];
         CGPoint point = CGPointMake(randomX, randomY);
-        UIView *pulseBeacon = [UIView pulsatingCircleWithRadius:50.f position:point color:color];
+        UIView *pulseBeacon = [UIView pulsingCircleWithRadius:50.f position:point color:color];
         
         [view addSubview:pulseBeacon];
     }
@@ -150,7 +112,7 @@
 - (void)startPulsingView:(UIView *)view {
     CGFloat radius = CGRectGetHeight(view.frame);
     CGPoint point = CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame));
-    self.pulseView = [UIView pulsatingCircleWithRadius:radius position:point color:[UIColor greenColor]];
+    self.pulseView = [UIView scaningCircleWithRadius:radius position:point color:[UIColor greenColor]];
     [view addSubview:self.pulseView];
     [view setNeedsDisplay];
 }

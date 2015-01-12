@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [KIOBluetoothService sharedInstance];
     [KIOBeaconService sharedInstance];
     [self listenNotification];
@@ -78,3 +78,4 @@
 
 
 @end
+

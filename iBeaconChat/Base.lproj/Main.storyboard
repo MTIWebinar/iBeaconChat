@@ -23,7 +23,7 @@
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iBeaconChat" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="3c3-jK-mdz">
-                                <rect key="frame" x="193.5" y="78.5" width="214" height="43"/>
+                                <rect key="frame" x="193" y="78" width="214" height="43"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="Kjo-ze-qjt" kind="presentation" identifier="GOSegue" modalTransitionStyle="coverVertical" id="3IE-9R-cVG"/>
+                        <segue destination="Kjo-ze-qjt" kind="presentation" identifier="GOSegue" modalTransitionStyle="flipHorizontal" id="3IE-9R-cVG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oCX-Xd-H1W" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -56,7 +56,27 @@
                     <view key="view" contentMode="scaleToFill" id="u3A-jc-F4j">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d03-Jr-ip1" customClass="KIOGradientView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="colorA">
+                                        <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="colorB">
+                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d03-Jr-ip1" firstAttribute="leading" secondItem="u3A-jc-F4j" secondAttribute="leading" id="QUV-wY-n6Q"/>
+                            <constraint firstItem="d03-Jr-ip1" firstAttribute="top" secondItem="u3A-jc-F4j" secondAttribute="top" id="afR-6P-SJx"/>
+                            <constraint firstItem="PxK-fs-BSp" firstAttribute="top" secondItem="d03-Jr-ip1" secondAttribute="bottom" id="gT8-3M-TmD"/>
+                            <constraint firstAttribute="trailing" secondItem="d03-Jr-ip1" secondAttribute="trailing" id="tCl-vm-C1E"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tKP-Z2-wpF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -79,23 +99,17 @@
                                 <rect key="frame" x="20" y="50" width="560" height="530"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                        <color key="value" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="circleCount">
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="segmentCount">
                                         <integer key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="fieldLineCount">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="fieldLineColor">
-                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="circleWidth">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="fieldLineWidth">
-                                        <integer key="value" value="1"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="segmentWidth">
+                                        <integer key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -137,9 +151,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVH-C7-4OC">
+                            <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVH-C7-4OC">
                                 <rect key="frame" x="20" y="50" width="560" height="529.5"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-4G-oeu">
+                                        <rect key="frame" x="259" y="254" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="rB6-4G-oeu" secondAttribute="centerX" id="l8G-AT-wx7"/>
+                                    <constraint firstAttribute="centerY" secondItem="rB6-4G-oeu" secondAttribute="centerY" id="qXy-z4-ZdL"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -150,6 +176,10 @@
                             <constraint firstItem="YVH-C7-4OC" firstAttribute="top" secondItem="44B-tF-BEk" secondAttribute="bottom" constant="30" id="thh-hS-f11"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bgView" destination="YVH-C7-4OC" id="Gt9-Ro-7Cf"/>
+                        <outlet property="lable" destination="rB6-4G-oeu" id="ubK-Ns-lCS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKf-O0-MTe" sceneMemberID="firstResponder"/>
             </objects>

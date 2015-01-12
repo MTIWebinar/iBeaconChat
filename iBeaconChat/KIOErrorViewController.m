@@ -12,7 +12,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.lable.text = NSLocalizedString(@"bluetooth_error", nil);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    UIBezierPath *maskBezierPath;
+    maskBezierPath = [UIBezierPath bezierPathWithRoundedRect:self.bgView.bounds cornerRadius:10.f];
+    CAShapeLayer *mask = CAShapeLayer.layer;
+    mask.path = maskBezierPath.CGPath;
+    self.bgView.layer.mask = mask;
 }
 
 - (void)didReceiveMemoryWarning {

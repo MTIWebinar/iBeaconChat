@@ -10,4 +10,7 @@
 
 @interface KIOErrorViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *lable;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+
 @end
