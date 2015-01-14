@@ -8,12 +8,15 @@
 
 #import "AppDelegate.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    application.statusBarStyle = UIStatusBarStyleLightContent;
-    
     // Override point for customization after application launch.
+    
+    [self registerUserDefaults];
+    [self setInfoInAppSettings];
+    
     return YES;
 }
 
@@ -38,5 +41,30 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+#pragma mark - AppSettings.plist
+
+- (void)registerUserDefaults {
+    static NSString *const kAppSettingsPlistName = @"AppSettings.plist";
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *appSettingsPath = [[NSBundle mainBundle] pathForResource:[kAppSettingsPlistName stringByDeletingPathExtension]
+                                                                ofType:[kAppSettingsPlistName pathExtension]];
+    NSDictionary *appSettings = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appSettingsPath]) {
+        appSettings = [NSDictionary dictionaryWithContentsOfFile:appSettingsPath];
+    }
+    [userDefaults registerDefaults:appSettings];
+}
+
+
+#pragma mark - App Settings Bundle
+
+- (void)setInfoInAppSettings {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"Kirill Osipov" forKey:@"KIODeveloperName"];
+}
+
 
 @end

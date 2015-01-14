@@ -42,16 +42,15 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        NSString *myUUID = @"ebefd083-70a2-47c8-9837-e7b5634df524";
-//        NSString *myUUID = @"f7826da6-4fa2-4e98-8024-bc5b71e0893e";
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *myUUID = [userDefaults objectForKey:@"KIOAppInitialUUID"];
+        
         NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:myUUID];
         sharedInstance = [[self alloc] initWithUUID:uuid];
         
     });
     return sharedInstance;
 }
-
-// TODO: uuid in app settings
 
 
 #pragma mark - Privat
@@ -74,18 +73,51 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
 }
 
 - (void)startMonitoring {
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (status == kCLAuthorizationStatusNotDetermined) {
-        // TODO: show request
-        NSLog(@"CLLocationManager kCLAuthorizationStatusNotDetermined");
-    }
-    
+    [self requestAlwaysAuthorization];
     [self.locationManager startMonitoringForRegion:self.beaconRegion];
 }
 
 - (void)stopMonitoring {
     [self.locationManager stopMonitoringForRegion:self.beaconRegion];
     [self postLocalNotificationType:KIOLocalNotificationTypeDelete beaconRegion:self.beaconRegion];
+}
+
+
+#pragma mark - iOS8 Authorization Status
+
+- (void)requestAlwaysAuthorization {
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusDenied) {
+        NSString *title = (status == kCLAuthorizationStatusDenied)
+                        ? NSLocalizedString(@"alert_location_off_title", nil)
+                        : NSLocalizedString(@"alert_location_background_title", nil);
+        
+        NSString *message = NSLocalizedString(@"alert_background_location_always_message", nil);
+        NSString *cancelButtonTitle = NSLocalizedString(@"alert_cancel_button", nil);
+        NSString *settingsButtonTitle = NSLocalizedString(@"alert_settings_button", nil);
+        
+        UIAlertView *alertView =
+        [[UIAlertView alloc] initWithTitle:title
+                                   message:message
+                                  delegate:self
+                         cancelButtonTitle:cancelButtonTitle
+                         otherButtonTitles:settingsButtonTitle, nil];
+        [alertView show];
+    }
+    
+    else if (status == kCLAuthorizationStatusNotDetermined) {
+        if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+            [self.locationManager requestAlwaysAuthorization];
+        }
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:settingsURL];
+    }
 }
 
 
@@ -97,18 +129,25 @@ typedef NS_ENUM(NSUInteger, KIOLocalNotificationType){
 }
 
 - (void)postLocalNotificationType:(KIOLocalNotificationType)localNotificationType beaconRegion:(CLBeaconRegion *)beaconRegion {
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL localNotificationON = [[userDefaults objectForKey:@"KIOLocalNotificationON"] boolValue];
+
     UIApplication *application = [UIApplication sharedApplication];
     [application cancelAllLocalNotifications];
     
-    if (localNotificationType == KIOLocalNotificationTypePost) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.alertBody = NSLocalizedString(@"user_enter", nil);;
-        notification.soundName = UILocalNotificationDefaultSoundName;
-
-        // TODO: nikname for ibeacon
-        // notification.userInfo = @{@"proximityUUID": [beaconRegion.proximityUUID UUIDString]};
-
-        [application presentLocalNotificationNow:notification];
+    if (localNotificationON) {
+        
+        if (localNotificationType == KIOLocalNotificationTypePost) {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.alertBody = NSLocalizedString(@"user_enter", nil);;
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            
+            // TODO: nikname for ibeacon
+            // notification.userInfo = @{@"proximityUUID": [beaconRegion.proximityUUID UUIDString]};
+            
+            [application presentLocalNotificationNow:notification];
+        }
     }
 }
 

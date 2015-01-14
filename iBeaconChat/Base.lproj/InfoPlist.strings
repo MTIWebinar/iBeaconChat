@@ -7,3 +7,4 @@
 */
 
 "CFBundleDisplayName" = "iBChat";
+"NSLocationWhenInUseUsageDescription" = "Location is required to find out where you are";
