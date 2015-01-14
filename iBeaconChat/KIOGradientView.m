@@ -27,10 +27,12 @@
         
     CGContextSaveGState(context);
     
-    CGPoint p1 = CGPointMake(CGRectGetMidX(rect), CGRectGetHeight(rect) * 0.9f);
-    CGPoint p2 = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+    CGPoint pointInside = CGPointMake(CGRectGetMidX(rect), CGRectGetHeight(rect) * 0.9f);
+    CGPoint pointOutside = CGPointMake(CGRectGetMidX(rect), CGRectGetHeight(rect) * 0.75f);
     
-    CGContextDrawRadialGradient(context, gradient, p1, 0.f, p2, MAX(CGRectGetMidX(rect), CGRectGetMidY(rect)),
+    CGContextDrawRadialGradient(context, gradient,
+                                pointInside, 0.f,
+                                pointOutside, MAX(CGRectGetMidX(rect), CGRectGetMidY(rect)),
                                 kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
     
     CGContextRestoreGState(context);

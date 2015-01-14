@@ -19,7 +19,7 @@
     view.layer.cornerRadius = radius;
     
     CABasicAnimation *scaleAnimation;
-    scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
+    scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scaleAnimation.fromValue = @0.0f;
     scaleAnimation.toValue = @1.0f;
     
@@ -54,7 +54,7 @@
     [bezierPath addLineToPoint:CGPointMake(view.frame.size.width/2, 30)];
     
     CAShapeLayer *mask = CAShapeLayer.layer;
-    mask.lineWidth = 2.f;
+    mask.lineWidth = 1.f;
     mask.lineCap = @"round";
     mask.strokeColor = color.CGColor;
     mask.path = bezierPath.CGPath;
