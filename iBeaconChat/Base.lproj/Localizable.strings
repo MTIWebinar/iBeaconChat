@@ -6,7 +6,15 @@
   Copyright (c) 2014 Kirill Osipov. All rights reserved.
 */
 
-"no_content" = "No content";
+"no_content" = "no messages";
 "enter_text" = "Enter message";
 "user_enter" = "+1 user come in";
-"bluetooth_error" = "switch on bluetooth";
+"bluetooth_error" = "switch ON bluetooth";
+
+// UIAlertView buttons
+
+"alert_cancel_button" = "Cancel";
+"alert_settings_button" = "Settings";
+"alert_location_off_title" = "Location services are off";
+"alert_location_background_title" = "Background location is not enabled";
+"alert_background_location_always_message" = "To use background location you must turn on 'Always' in the Location Services Settings";

@@ -14,28 +14,36 @@
                         <viewControllerLayoutGuide type="top" id="89O-B5-Wo4"/>
                         <viewControllerLayoutGuide type="bottom" id="X2y-dq-jpl"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hg0-H8-MLo">
+                    <view key="view" contentMode="scaleToFill" id="hg0-H8-MLo" customClass="KIOGradientView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Azz-id-uhP">
-                                <rect key="frame" x="281" y="431" width="37" height="37"/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="281" y="515" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iBeaconChat" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="3c3-jK-mdz">
-                                <rect key="frame" x="193" y="78" width="214" height="43"/>
+                                <rect key="frame" x="193" y="78.5" width="214" height="43"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Azz-id-uhP" secondAttribute="centerY" multiplier="2:3" id="hCo-RN-fja"/>
+                            <constraint firstAttribute="centerY" secondItem="Azz-id-uhP" secondAttribute="centerY" multiplier="9:16" id="hCo-RN-fja"/>
                             <constraint firstAttribute="centerX" secondItem="Azz-id-uhP" secondAttribute="centerX" id="hkE-Lo-eed"/>
                             <constraint firstAttribute="centerX" secondItem="3c3-jK-mdz" secondAttribute="centerX" id="hrF-Cj-9aj"/>
                             <constraint firstAttribute="centerY" secondItem="3c3-jK-mdz" secondAttribute="centerY" multiplier="3" id="m8Q-Bd-BKX"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="colorA">
+                                <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="colorB">
+                                <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <segue destination="Kjo-ze-qjt" kind="presentation" identifier="GOSegue" modalTransitionStyle="flipHorizontal" id="3IE-9R-cVG"/>
@@ -53,30 +61,18 @@
                         <viewControllerLayoutGuide type="top" id="C50-N1-jLR"/>
                         <viewControllerLayoutGuide type="bottom" id="PxK-fs-BSp"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="u3A-jc-F4j">
+                    <view key="view" contentMode="scaleToFill" id="u3A-jc-F4j" customClass="KIOGradientView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d03-Jr-ip1" customClass="KIOGradientView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="colorA">
-                                        <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="colorB">
-                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="d03-Jr-ip1" firstAttribute="leading" secondItem="u3A-jc-F4j" secondAttribute="leading" id="QUV-wY-n6Q"/>
-                            <constraint firstItem="d03-Jr-ip1" firstAttribute="top" secondItem="u3A-jc-F4j" secondAttribute="top" id="afR-6P-SJx"/>
-                            <constraint firstItem="PxK-fs-BSp" firstAttribute="top" secondItem="d03-Jr-ip1" secondAttribute="bottom" id="gT8-3M-TmD"/>
-                            <constraint firstAttribute="trailing" secondItem="d03-Jr-ip1" secondAttribute="trailing" id="tCl-vm-C1E"/>
-                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="colorA">
+                                <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="colorB">
+                                <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tKP-Z2-wpF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,7 +147,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVH-C7-4OC">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVH-C7-4OC">
                                 <rect key="frame" x="20" y="50" width="560" height="529.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-4G-oeu">
@@ -161,7 +157,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="rB6-4G-oeu" secondAttribute="centerX" id="l8G-AT-wx7"/>
                                     <constraint firstAttribute="centerY" secondItem="rB6-4G-oeu" secondAttribute="centerY" id="qXy-z4-ZdL"/>

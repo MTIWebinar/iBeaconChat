@@ -20,6 +20,8 @@
 		FA79FFA81A31FD0D00994123 /* KIOBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = FA79FFA71A31FD0D00994123 /* KIOBeaconService.m */; };
 		FA8E312A1A35E70600D7F690 /* KIORadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E31291A35E70600D7F690 /* KIORadarView.m */; };
 		FABE014F1A4C36D80041487F /* KIOGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = FABE014E1A4C36D80041487F /* KIOGradientView.m */; };
+		FAC610D11A6573D900CD82AC /* AppSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAC610D01A6573D900CD82AC /* AppSettings.plist */; };
+		FAC610D61A65804700CD82AC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FAC610D51A65804700CD82AC /* Settings.bundle */; };
 		FAFBCB8A1A1C9FBF00A5ED73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB891A1C9FBF00A5ED73 /* main.m */; };
 		FAFBCB8D1A1C9FBF00A5ED73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */; };
 		FAFBCB901A1C9FBF00A5ED73 /* KIOPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFBCB8F1A1C9FBF00A5ED73 /* KIOPageViewController.m */; };
@@ -66,6 +68,8 @@
 		FA8E31291A35E70600D7F690 /* KIORadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIORadarView.m; sourceTree = "<group>"; };
 		FABE014D1A4C36D80041487F /* KIOGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIOGradientView.h; sourceTree = "<group>"; };
 		FABE014E1A4C36D80041487F /* KIOGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIOGradientView.m; sourceTree = "<group>"; };
+		FAC610D01A6573D900CD82AC /* AppSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppSettings.plist; sourceTree = "<group>"; };
+		FAC610D51A65804700CD82AC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FAFBCB841A1C9FBF00A5ED73 /* iBeaconChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFBCB881A1C9FBF00A5ED73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAFBCB891A1C9FBF00A5ED73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -172,6 +176,8 @@
 			children = (
 				FAFBCB8B1A1C9FBF00A5ED73 /* AppDelegate.h */,
 				FAFBCB8C1A1C9FBF00A5ED73 /* AppDelegate.m */,
+				FAC610D01A6573D900CD82AC /* AppSettings.plist */,
+				FAC610D51A65804700CD82AC /* Settings.bundle */,
 				FA1A51231A1D58BA001D976F /* Localizable.strings */,
 				FA1A512A1A1D5EB3001D976F /* InfoPlist.strings */,
 				FAFBCB881A1C9FBF00A5ED73 /* Info.plist */,
@@ -293,6 +299,8 @@
 				FA1A51211A1D58BA001D976F /* Localizable.strings in Resources */,
 				FAFBCB9E1A1C9FBF00A5ED73 /* LaunchScreen.xib in Resources */,
 				FAFBCB9B1A1C9FBF00A5ED73 /* Images.xcassets in Resources */,
+				FAC610D11A6573D900CD82AC /* AppSettings.plist in Resources */,
+				FAC610D61A65804700CD82AC /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

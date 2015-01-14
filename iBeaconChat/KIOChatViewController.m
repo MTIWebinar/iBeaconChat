@@ -21,7 +21,6 @@
 
 @interface KIOChatViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *messages;
-@property (strong, nonatomic) UILabel *noOneLable;
 @end
 
 
@@ -42,17 +41,14 @@
     
     [self scrollToEndContent];
     
-//    if (self.messages.count == 0) {
+//    if (self.messages.count < 1) {
 //        [self.textField becomeFirstResponder];
 //    }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if ([self.textField isFirstResponder]) {
-        [self.textField resignFirstResponder];
-    }
+    [self hideKeyboard];
 }
 
 - (void)dealloc {
@@ -92,17 +88,19 @@
     }
 }
 
-- (void)showNoContent:(BOOL)show inView:(UIView *)view {
-    if (show && !self.noOneLable) {
-        self.noOneLable = [[UILabel alloc] initWithFrame:view.frame];
-        self.noOneLable.text = NSLocalizedString(@"no_content", nil);
-        self.noOneLable.textColor = [[UIColor grayColor] colorWithAlphaComponent:.5f];
-        self.noOneLable.textAlignment = NSTextAlignmentCenter;
-        self.noOneLable.center = self.tableView.center;
-        [view addSubview:self.noOneLable];
-    } else if (self.noOneLable) {
-        [self.noOneLable removeFromSuperview];
-        self.noOneLable = nil;
+- (void)noContentLableInView:(UIView *)view show:(BOOL)show {
+    UILabel *lable = (UILabel *)[view viewWithTag:1001];
+    if (show && !lable) {
+        lable = [[UILabel alloc] initWithFrame:view.frame];
+        lable.text = NSLocalizedString(@"no_content", nil);
+        lable.textColor = [[UIColor whiteColor] colorWithAlphaComponent:.5f];
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.center = view.center;
+        lable.tag = 1001;
+        [view addSubview:lable];
+    } else if (lable) {
+        [lable removeFromSuperview];
+        lable = nil;
     }
 }
 
@@ -129,6 +127,8 @@
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     CGFloat pointY = CGRectGetMinY(keyboardRect);
     
+    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
+
     void (^animations)(void) = ^{
 
         CGRect toolBarRect = self.toolBar.frame;
@@ -146,6 +146,7 @@
     void (^completion)(BOOL finished) = ^(BOOL finished){
         
         [self scrollToEndContent];
+        NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
     };
     
     [UIView animateWithDuration:keyboardDuration
@@ -211,7 +212,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.messages.count == 0 ? [self showNoContent:YES inView:self.tableView] : [self showNoContent:NO inView:self.tableView];
+    [self noContentLableInView:tableView show:!self.messages.count];
     return self.messages.count;
 }
 

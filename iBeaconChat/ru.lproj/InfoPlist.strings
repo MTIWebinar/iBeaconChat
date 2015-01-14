@@ -7,3 +7,4 @@
 */
 
 "CFBundleDisplayName" = "iБикЧат";
+"NSLocationWhenInUseUsageDescription" = "Будет определяться положение в радиусе 50 метров";
