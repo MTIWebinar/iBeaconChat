@@ -42,7 +42,7 @@
 #pragma mark - KIOBeaconViewController
 
 @interface KIOBeaconViewController ()
-@property (strong, nonatomic) UIView *pulseView;
+@property (strong, nonatomic) UIView *animatedView;
 @property (strong, nonatomic) NSDictionary *beacons;
 @end
 
@@ -57,8 +57,8 @@
     [super viewDidAppear:animated];
     
     [self listenNotification];
-    if (!self.pulseView) {
-        [self startPulsingView:self.view];
+    if (!self.animatedView) {
+        [self startScaningView:self.view];
     }
 }
 
@@ -67,9 +67,9 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self reloadBeaconView:self.beaconView];
-    if (self.pulseView) {
-        [self.pulseView removeFromSuperview];
-        self.pulseView = nil;
+    if (self.animatedView) {
+        [self.animatedView removeFromSuperview];
+        self.animatedView = nil;
     }
 }
 
@@ -86,35 +86,60 @@
     for (NSString *beaconID in self.beacons) {
         
         KIOBeaconProximity proximity = [self.beacons[beaconID] integerValue];
-        
-        CGFloat randomdx = (float)arc4random_uniform((int)(CGRectGetWidth(view.frame)/10)) * ((float)arc4random_uniform(2)?-1:1);
-        CGFloat randomX = CGRectGetWidth(view.frame)/2 + randomdx;
-        CGFloat randomY = [self proximityBeaconPointY:proximity inView:view];
-        
         UIColor *color = [UIColor proximityBeaconColor:proximity];
-        CGPoint point = CGPointMake(randomX, randomY);
+        CGPoint point = [self pointForProximity:proximity inView:view];
         UIView *pulseBeacon = [UIView pulsingCircleWithRadius:50.f position:point color:color];
         
         [view addSubview:pulseBeacon];
     }
 }
 
-- (CGFloat)proximityBeaconPointY:(KIOBeaconProximity)proximity inView:(UIView *)view {
+- (CGPoint)pointForProximity:(KIOBeaconProximity)proximity inView:(UIView *)view {
+    CGPoint point;
+    
+    CGFloat w = CGRectGetWidth(view.frame);
     CGFloat h = CGRectGetHeight(view.frame);
+    
+    float sign = arc4random_uniform(2) ? -1 : 1;
+    CGFloat randomX = arc4random_uniform(w/2) * sign;
+    CGFloat randomY = arc4random_uniform(h/3);
+    
     switch (proximity) {
-        case KIOBeaconProximityUnknown:    return arc4random_uniform(h/2);             break;
-        case KIOBeaconProximityImmediate:  return h - arc4random_uniform(20);          break;
-        case KIOBeaconProximityNear:       return h/2 + h/3 + arc4random_uniform(h/3); break;
-        case KIOBeaconProximityFar:        return h/2 + arc4random_uniform(h/3);       break;
+        
+        case KIOBeaconProximityImmediate: {
+            point.x = w/2 + randomX / 8;
+            point.y = h - randomY;
+        }break;
+        
+        case KIOBeaconProximityNear: {
+            point.x = w/2 + randomX / 3;
+            point.y = h - h/3 - randomY;
+        }break;
+        
+        case KIOBeaconProximityFar: {
+            point.x =  w/2 + randomX / 2;
+            point.y = randomY;
+        }break;
+        
+        case KIOBeaconProximityUnknown: {
+            point.x = w/2 + randomX;
+            point.y = randomY / 4;
+        }break;
     }
+    
+    return point;
 }
 
-- (void)startPulsingView:(UIView *)view {
-    CGFloat radius = CGRectGetHeight(view.frame);
-    CGPoint point = CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame));
-    self.pulseView = [UIView scaningCircleWithRadius:radius position:point color:[UIColor greenColor]];
-    [view addSubview:self.pulseView];
-    [view setNeedsDisplay];
+- (void)startScaningView:(UIView *)view {
+
+    self.animatedView = [UIView scaningFrame:view.frame color:[UIColor greenColor]];
+    [view addSubview:self.animatedView];
+
+    self.animatedView.alpha = 0.f;
+    void (^animations)(void) = ^{
+        self.animatedView.alpha = 1.0f;
+    };
+    [UIView animateWithDuration:.8f animations:animations];
 }
 
 
@@ -127,12 +152,15 @@
 
 - (void)notificationBeacon:(NSNotification *)notification {
     NSDictionary *tempBeacons = (NSDictionary *)notification.userInfo[@"beacons"];
+
+#warning beacons array need to be refuck
     
     if (!self.beacons && tempBeacons.count > 0) {
         self.beacons = tempBeacons;
         [self reloadBeaconView:self.beaconView];
         [self.view setNeedsDisplay];
-    } else {
+    }
+    else {
         
         // TODO: isNew beacon refuck
         for (NSString *beaconID in tempBeacons.allKeys) {

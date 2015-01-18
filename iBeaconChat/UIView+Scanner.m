@@ -14,10 +14,33 @@
 + (UIView *)pulsingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color {
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, radius*2, radius*2)];
+    view.backgroundColor = UIColor.clearColor;
     view.center = point;
-    view.backgroundColor = color;
-    view.layer.cornerRadius = radius;
     
+    // center point
+    CGRect rect;
+    rect.size = CGSizeMake(radius * .4f, radius * .4f);
+    rect.origin = CGPointMake(radius - radius * .2f, radius - radius * .2f);
+    
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:rect];
+    
+    CAShapeLayer *centerPoint = CAShapeLayer.layer;
+    centerPoint.lineWidth = 2.f;
+    centerPoint.strokeColor = [UIColor whiteColor].CGColor;
+    centerPoint.fillColor = color.CGColor;
+    centerPoint.shadowRadius = 10.f;
+    centerPoint.shadowColor = [UIColor whiteColor].CGColor;
+    centerPoint.shadowOffset = CGSizeMake(0, 0);
+    centerPoint.shadowOpacity = 1.f;
+    centerPoint.path = bezierPath.CGPath;
+    
+    [view.layer addSublayer:centerPoint];
+    
+    // animation
+    UIView *innerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, radius*2, radius*2)];
+    innerView.backgroundColor = color;
+    innerView.layer.cornerRadius = radius;
+
     CABasicAnimation *scaleAnimation;
     scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scaleAnimation.fromValue = @0.0f;
@@ -33,33 +56,36 @@
     groupAnimation.duration = .8f * 4;
     groupAnimation.repeatCount = HUGE_VAL;
     groupAnimation.removedOnCompletion = NO;
+    groupAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     groupAnimation.animations = @[opacityAnimation, scaleAnimation];
     
-    [view.layer addAnimation:groupAnimation forKey:@"groupAnimation"];
+    [innerView.layer addAnimation:groupAnimation forKey:@"groupAnimation"];
+    
+    [view insertSubview:innerView atIndex:0];
     
     return view;
 }
 
-+ (UIView *)scaningCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color {
++ (UIView *)scaningFrame:(CGRect)frame color:(UIColor *)color {
+    
+    CGFloat radius = CGRectGetHeight(frame);
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, radius*2, radius*2)];
-    view.center = point;
+    view.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMaxY(frame));
     view.backgroundColor = UIColor.clearColor;
     view.layer.cornerRadius = radius;
     
-    
-    // radar view for animation
+    // radar line for animation
     UIBezierPath *bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint:CGPointMake(view.frame.size.width/2, view.frame.size.height/2 - 50)];
-    [bezierPath addLineToPoint:CGPointMake(view.frame.size.width/2, 30)];
+    [bezierPath moveToPoint:CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame)/2 - 50)];
+    [bezierPath addLineToPoint:CGPointMake(CGRectGetWidth(view.frame)/2, 30)];
     
-    CAShapeLayer *mask = CAShapeLayer.layer;
-    mask.lineWidth = 1.f;
-    mask.lineCap = @"round";
-    mask.strokeColor = color.CGColor;
-    mask.path = bezierPath.CGPath;
-    [view.layer addSublayer:mask];
-    
+    CAShapeLayer *layer = CAShapeLayer.layer;
+    layer.lineWidth = 1.f;
+    layer.lineCap = @"round";
+    layer.strokeColor = color.CGColor;
+    layer.path = bezierPath.CGPath;
+    [view.layer addSublayer:layer];
     
     // animation
     float angle = (float)(M_PI_2 - atanf(CGRectGetHeight(view.frame)/(CGRectGetWidth(view.frame)/2)));
@@ -71,6 +97,7 @@
     rotationAnimation.removedOnCompletion = NO;
     rotationAnimation.fromValue = [NSNumber numberWithFloat:-angle];
     rotationAnimation.toValue = [NSNumber numberWithFloat:angle];
+    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [view.layer addAnimation:rotationAnimation forKey:@"animateLayer"];
 
     return view;

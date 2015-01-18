@@ -10,5 +10,6 @@
 
 @interface UIView (Scanner)
 + (UIView *)pulsingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color;
-+ (UIView *)scaningCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color;
+//+ (UIView *)pulsingCircleWithRadius:(CGFloat)radius position:(CGPoint)point color:(UIColor *)color image:(UIImage *)image;
++ (UIView *)scaningFrame:(CGRect)frame color:(UIColor *)color;
 @end

@@ -12,6 +12,5 @@
 
 @property (weak, nonatomic) IBOutlet UIView *beaconView;
 @property (weak, nonatomic) IBOutlet UIView *radarView;
-@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end
