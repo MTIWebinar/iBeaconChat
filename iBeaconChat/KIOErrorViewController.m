@@ -20,12 +20,7 @@
     [super viewWillAppear:animated];    
 
     self.bgView.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.5f];
-    
-    UIBezierPath *maskBezierPath;
-    maskBezierPath = [UIBezierPath bezierPathWithRoundedRect:self.bgView.bounds cornerRadius:10.f];
-    CAShapeLayer *mask = CAShapeLayer.layer;
-    mask.path = maskBezierPath.CGPath;
-    self.bgView.layer.mask = mask;
+    self.bgView.layer.cornerRadius = 10.f;
 }
 
 - (void)didReceiveMemoryWarning {

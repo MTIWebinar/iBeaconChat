@@ -8,11 +8,15 @@
 
 "no_content" = "no messages";
 "enter_text" = "Enter message";
-"user_enter" = "+1 user come in";
 "bluetooth_error" = "switch ON bluetooth";
 
-// UIAlertView buttons
+// Notifications
+"user_enter" = "+1 user come in";
 
+// Settings bundle
+"settings_developer_name" = "Kirill Osipov";
+
+// UIAlertView
 "alert_cancel_button" = "Cancel";
 "alert_settings_button" = "Settings";
 "alert_location_off_title" = "Location services are off";

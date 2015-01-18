@@ -63,7 +63,8 @@
 
 - (void)setInfoInAppSettings {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"Kirill Osipov" forKey:@"KIODeveloperName"];
+    NSString *devName = NSLocalizedString(@"settings_developer_name", nil);
+    [userDefaults setObject:devName forKey:@"KIODeveloperName"];
 }
 
 

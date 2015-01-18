@@ -8,5 +8,17 @@
 
 "no_content" = "нет сообщений";
 "enter_text" = "Введите сообщение";
-"user_enter" = "+1 гаврик пришел";
 "bluetooth_error" = "включите bluetooth";
+
+// Notifications
+"user_enter" = "+1 гаврик пришел";
+
+// Settings bundle
+"settings_developer_name" = "Кирилл Осипов";
+
+// UIAlertView
+"alert_cancel_button" = "Отмена";
+"alert_settings_button" = "Настройки";
+"alert_location_off_title" = "Сервис геолокации отключен";
+"alert_location_background_title" = "Локатор в бэкграунде не включен";
+"alert_background_location_always_message" = "Для постоянного определения ващей позиции нужно в настройках установить 'Виден всегда'";

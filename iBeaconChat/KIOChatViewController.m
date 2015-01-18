@@ -127,8 +127,6 @@
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     CGFloat pointY = CGRectGetMinY(keyboardRect);
     
-    NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
-
     void (^animations)(void) = ^{
 
         CGRect toolBarRect = self.toolBar.frame;
@@ -146,7 +144,6 @@
     void (^completion)(BOOL finished) = ^(BOOL finished){
         
         [self scrollToEndContent];
-        NSLog(@"%@", NSStringFromCGRect(self.tableView.frame));
     };
     
     [UIView animateWithDuration:keyboardDuration
